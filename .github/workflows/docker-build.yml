@@ -122,8 +122,7 @@ jobs:
           file: ./docker/Dockerfile
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          cache-from: type=gha,scope=full-${{ matrix.platform }}
-          cache-to: type=gha,mode=max,scope=full-${{ matrix.platform }}
+          no-cache: true
           build-args: |
             VERSION=${{ needs.prepare.outputs.version }}
 
@@ -179,8 +178,7 @@ jobs:
           file: ./docker/Dockerfile.slim
           platforms: ${{ matrix.platform }}
           outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          cache-from: type=gha,scope=slim-${{ matrix.platform }}
-          cache-to: type=gha,mode=max,scope=slim-${{ matrix.platform }}
+          no-cache: true
           build-args: |
             VERSION=${{ needs.prepare.outputs.version }}
 
@@ -228,8 +226,7 @@ jobs:
           file: ./docker/Dockerfile.ci
           platforms: linux/amd64
           outputs: type=image,name=${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
-          cache-from: type=gha,scope=ci-linux/amd64
-          cache-to: type=gha,mode=max,scope=ci-linux/amd64
+          no-cache: true
           build-args: |
             VERSION=${{ needs.prepare.outputs.version }}
 

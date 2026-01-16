@@ -16,18 +16,19 @@ RUN apk add --no-cache git ca-certificates tzdata
 
 WORKDIR /src
 
-# Better build cache: copy module files first
+# Copy module files first for better layer caching
 COPY go.mod go.sum ./
 
-# Go module download cache (BuildKit)
+# This IS the rediver-sdk repo, so replace module path with current directory
+# Must happen BEFORE go mod download
+RUN go mod edit -replace github.com/rediverio/rediver-sdk=./
+
+# Download dependencies (with cache)
 RUN --mount=type=cache,target=/go/pkg/mod \
     go mod download
 
-# Copy the rest
+# Copy the rest of the source code
 COPY . .
-
-# This IS the rediver-sdk repo, so replace module path with current directory
-RUN go mod edit -replace github.com/rediverio/rediver-sdk=./
 
 ARG TARGETOS=linux
 ARG TARGETARCH=amd64

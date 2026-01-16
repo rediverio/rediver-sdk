@@ -23,11 +23,13 @@ ARG TARGETOS=linux
 ARG TARGETARCH=amd64
 ARG VERSION=dev
 
-# Initialize Go Workspace to resolve local module self-references
-RUN go work init .
+# Private repo: skip module proxy and use local source
+ENV GOPRIVATE=github.com/rediverio/*
 
 # Download dependencies and build
-RUN go mod download && \
+# Remove go.sum to force fresh tidy inside container
+RUN rm -f go.sum && \
+    go mod tidy && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \

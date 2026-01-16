@@ -30,11 +30,12 @@ WORKDIR /build
 # Copy all source code (ensures local packages are available)
 COPY . .
 
-# Set GOPRIVATE to skip proxy verification for this module
-ENV GOPRIVATE=github.com/rediverio/*
+# Configure Go to use local packages and skip network verification
+ENV GOPRIVATE=github.com/*
+ENV GOFLAGS="-mod=mod"
 
-# Download external dependencies
-RUN go mod download
+# Tidy modules
+RUN go mod tidy
 
 # Build with optimizations
 ARG TARGETOS=linux

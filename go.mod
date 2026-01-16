@@ -15,3 +15,7 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
 	golang.org/x/time v0.8.0 // indirect
 )
+
+// Replace directive ensures local packages are used during build
+// This is automatically handled when source is in the correct directory structure
+replace github.com/rediverio/rediver-sdk => ./

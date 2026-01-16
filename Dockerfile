@@ -26,12 +26,8 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 # Copy the rest
 COPY . .
 
-# Optional local replace (only if you vendor the SDK inside repo)
-# Adjust LOCAL_SDK_PATH if needed (default: rediver-sdk folder at repo root)
-ARG LOCAL_SDK_PATH=rediver-sdk
-RUN if [ -d "./${LOCAL_SDK_PATH}" ]; then \
-    go mod edit -replace github.com/rediverio/rediver-sdk=./${LOCAL_SDK_PATH}; \
-    fi
+# This IS the rediver-sdk repo, so replace module path with current directory
+RUN go mod edit -replace github.com/rediverio/rediver-sdk=./
 
 ARG TARGETOS=linux
 ARG TARGETARCH=amd64

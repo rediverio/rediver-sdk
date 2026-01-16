@@ -23,17 +23,9 @@ ARG TARGETOS=linux
 ARG TARGETARCH=amd64
 ARG VERSION=dev
 
-# DEBUG: Check files and environment
-RUN ls -la && \
-    cat go.mod && \
-    cat go.work || echo "go.work not found" && \
-    go env
-
-# Download dependencies
-RUN go mod download
-
-# Build
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
+# Download dependencies and build
+RUN go mod download && \
+    CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \
     -o /out/rediver-agent \

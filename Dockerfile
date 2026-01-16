@@ -23,10 +23,10 @@ ARG TARGETOS=linux
 ARG TARGETARCH=amd64
 ARG VERSION=dev
 
-# Private repo: skip module proxy and use local source
-ENV GOPRIVATE=github.com/rediverio/*
+# Initialize Go Workspace to resolve local module self-references
+RUN go work init .
 
-# Download dependencies and build (replace directive is already in go.mod)
+# Download dependencies and build
 RUN go mod download && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath \

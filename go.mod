@@ -15,6 +15,3 @@ require (
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
 	golang.org/x/time v0.8.0 // indirect
 )
-
-// Self-reference for Docker builds (module imports its own packages)
-replace github.com/rediverio/rediver-sdk => ./

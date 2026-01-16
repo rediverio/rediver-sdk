@@ -23,15 +23,21 @@ RUN apk add --no-cache git ca-certificates tzdata
 
 WORKDIR /build
 
-# Copy go mod files first for better caching
-COPY go.mod go.sum ./
-RUN go mod download
-
-# Copy source code
+# Copy all source code first (including go.mod, go.sum, and pkg/)
+# This ensures local packages are available before go mod operations
 COPY . .
 
+# Download dependencies (skip if already vendored)
+# Using -x for verbose output to debug issues
+RUN go mod download -x 2>&1 || true
+
+# Verify module is correctly set up
+RUN go list -m && go list ./...
+
 # Build with optimizations
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+ARG TARGETOS=linux
+ARG TARGETARCH=amd64
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
     -ldflags="-w -s -X main.appVersion=$(git describe --tags --always --dirty 2>/dev/null || echo 'dev')" \
     -o /build/rediver-agent \
     ./cmd/rediver-agent

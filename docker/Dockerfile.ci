@@ -27,13 +27,17 @@ RUN apk add --no-cache git ca-certificates tzdata
 
 WORKDIR /build
 
-COPY go.mod go.sum ./
-RUN go mod download
-
+# Copy all source code first (ensures local packages are available)
 COPY . .
 
+# Download external dependencies only
+RUN go mod download -x 2>&1 || true
+
+# Build with optimizations
 ARG VERSION=dev
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
+ARG TARGETOS=linux
+ARG TARGETARCH=amd64
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \
     -o /build/rediver-agent \
     ./cmd/rediver-agent

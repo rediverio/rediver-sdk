@@ -26,9 +26,8 @@ ARG VERSION=dev
 # Private repo: skip module proxy and use local source
 ENV GOPRIVATE=github.com/rediverio/*
 
-# Download dependencies and build
-RUN go mod edit -replace github.com/rediverio/rediver-sdk=./ && \
-    go mod download && \
+# Download dependencies and build (replace directive is already in go.mod)
+RUN go mod download && \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \

@@ -328,18 +328,36 @@ rediver-agent -daemon -config config.yaml
 
 ### Images
 
-| Image | Description | Size |
-|-------|-------------|------|
-| `ghcr.io/rediverio/rediver-agent:latest` | Full image with all tools | ~500MB |
-| `ghcr.io/rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
-| `ghcr.io/rediverio/rediver-agent:ci` | CI/CD optimized | ~600MB |
+Images are available on both **GitHub Container Registry** and **Docker Hub**:
+
+| Registry | Image | Description | Size |
+|----------|-------|-------------|------|
+| GHCR | `ghcr.io/rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
+| GHCR | `ghcr.io/rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
+| GHCR | `ghcr.io/rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
+| Docker Hub | `rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
+| Docker Hub | `rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
+| Docker Hub | `rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
 
 ### Quick Start
 
 ```bash
+# Pull from Docker Hub
+docker pull rediverio/rediver-agent:latest
+
+# Or from GHCR
+docker pull ghcr.io/rediverio/rediver-agent:latest
+
 # Run scan on current directory
-docker run --rm -v $(pwd):/scan ghcr.io/rediverio/rediver-agent:latest \
+docker run --rm -v $(pwd):/scan rediverio/rediver-agent:latest \
     -tools semgrep,gitleaks,trivy -target /scan -verbose
+
+# Run scan and push results to Rediver platform
+docker run --rm -v $(pwd):/scan \
+    -e REDIVER_API_URL=https://api.rediver.io \
+    -e REDIVER_API_KEY=your-api-key \
+    rediverio/rediver-agent:latest \
+    -tools semgrep,gitleaks,trivy -target /scan -push -verbose
 
 # Using docker-compose
 docker compose -f docker/docker-compose.yml run --rm scan
@@ -359,49 +377,104 @@ docker build -t rediver-agent:ci -f docker/Dockerfile.ci .
 
 ## CI/CD Integration
 
+Ready-to-use examples are available in [`examples/ci-cd/`](./examples/ci-cd/).
+
 ### GitHub Actions
 
 ```yaml
+# .github/workflows/security.yml
 name: Security Scan
 on: [push, pull_request]
 
 jobs:
   scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      security-events: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for diff-based scanning
 
       - name: Run Security Scan
         uses: docker://ghcr.io/rediverio/rediver-agent:ci
         with:
-          args: -tools semgrep,gitleaks,trivy -target . -auto-ci -verbose
+          args: >-
+            -tools semgrep,gitleaks,trivy
+            -target .
+            -auto-ci
+            -comments
+            -push
+            -verbose
+            -sarif
+            -sarif-output results.sarif
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
           REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
 ```
 
 ### GitLab CI
 
 ```yaml
+# .gitlab-ci.yml
+stages:
+  - security
+
 security-scan:
+  stage: security
   image: ghcr.io/rediverio/rediver-agent:ci
-  script:
-    - rediver-agent -tools semgrep,gitleaks,trivy -target . -auto-ci -verbose
   variables:
+    GITLAB_TOKEN: $CI_JOB_TOKEN
     REDIVER_API_URL: $REDIVER_API_URL
     REDIVER_API_KEY: $REDIVER_API_KEY
+  script:
+    - |
+      rediver-agent \
+        -tools semgrep,gitleaks,trivy \
+        -target . \
+        -auto-ci \
+        -comments \
+        -push \
+        -verbose \
+        -sarif \
+        -sarif-output gl-sast-report.json
+  artifacts:
+    reports:
+      sast: gl-sast-report.json
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 ```
+
+### Key Features
+
+| Feature | Flag | Description |
+|---------|------|-------------|
+| Auto CI detection | `-auto-ci` | Detects GitHub/GitLab environment automatically |
+| Inline comments | `-comments` | Posts findings as PR/MR inline comments |
+| Push to platform | `-push` | Sends results to Rediver platform |
+| SARIF output | `-sarif` | Generates SARIF for security dashboards |
+| Diff-based scan | Automatic | Only scans changed files in MR/PR context |
 
 ### Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `REDIVER_API_URL` | Rediver platform API URL |
-| `REDIVER_API_KEY` | API key for authentication |
-| `REDIVER_WORKER_ID` | Worker identifier for tracking |
-| `GITHUB_TOKEN` | GitHub token (for PR comments) |
-| `GITLAB_TOKEN` | GitLab token (for MR comments) |
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `REDIVER_API_URL` | Yes* | Rediver platform API URL |
+| `REDIVER_API_KEY` | Yes* | API key for authentication |
+| `REDIVER_WORKER_ID` | No | Worker identifier for tracking |
+| `GITHUB_TOKEN` | Auto | GitHub token (for PR comments) |
+| `GITLAB_TOKEN` | Auto | GitLab token (for MR comments) |
+
+*Required when using `-push` flag
 
 ## Best Practices
 

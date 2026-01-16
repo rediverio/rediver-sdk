@@ -10,7 +10,6 @@
 # -----------------------------------------------------------------------------
 # Stage 1: Build Go binary (shared)
 # -----------------------------------------------------------------------------
-# Use ECR Public mirror to avoid Docker Hub rate limits
 FROM --platform=$BUILDPLATFORM public.ecr.aws/docker/library/golang:1.25-alpine AS builder
 
 RUN apk add --no-cache git ca-certificates tzdata
@@ -26,14 +25,6 @@ ARG VERSION=dev
 
 # ENV
 ENV GO111MODULE=on
-
-# DEBUG: List files
-RUN ls -la
-
-# WORKAROUND: Force local resolution by removing go.work (if any) and using replace in go.mod
-# This ensures that 'github.com/rediverio/rediver-sdk' resolves to '.' inside the container
-RUN rm -f go.work go.work.sum && \
-    go mod edit -replace github.com/rediverio/rediver-sdk=./
 
 # Build
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \

@@ -218,8 +218,7 @@ godoc/
 # Debug files
 debug
 *.debug
-core
-*.core
+*.# core
 
 # Profiling
 *.prof

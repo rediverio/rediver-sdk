@@ -24,19 +24,17 @@ ARG TARGETOS=linux
 ARG TARGETARCH=amd64
 ARG VERSION=dev
 
-# ENV to force direct connection
-ENV GOPRIVATE=*
+# ENV
 ENV GO111MODULE=on
 
-# DEBUG: List all files to ensure COPY is working correctly
-RUN ls -R /src
+# DEBUG: List all files to ensure COPY is working
+RUN ls -la
 
-# Download dependencies via vendor to isolate build
-RUN go mod vendor
-
-# Build using vendor directory
+# Build directly (relies on go.work for local resolution)
+# Note: No explicit 'go mod download' needed for workspace mode usually, 
+# but if needed, go build handles it.
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
-    go build -mod=vendor -trimpath \
+    go build -trimpath \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \
     -o /out/rediver-agent \
     ./cmd/rediver-agent

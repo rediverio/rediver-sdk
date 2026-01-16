@@ -93,7 +93,7 @@ COPY --from=builder /build/rediver-agent /usr/local/bin/
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 
 # Environment for CI
-ENV SEMGREP_SEND_METRICS=off
+# Note: Don't set SEMGREP_SEND_METRICS=off if using --config auto
 ENV TRIVY_CACHE_DIR=/root/.cache/trivy
 ENV TRIVY_NO_PROGRESS=true
 ENV CI=true

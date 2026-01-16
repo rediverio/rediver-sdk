@@ -108,7 +108,8 @@ RUN mkdir -p /scan /config /cache && \
 # Set environment
 ENV HOME=/home/rediver
 ENV TRIVY_CACHE_DIR=/cache/trivy
-ENV SEMGREP_SEND_METRICS=off
+# Note: Don't set SEMGREP_SEND_METRICS=off if using --config auto
+# Users can set it manually if needed
 
 # Switch to non-root user
 USER rediver

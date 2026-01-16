@@ -54,7 +54,7 @@ jobs:
           fetch-depth: 0  # Full history for diff-based scanning
 
       - name: Run Rediver Security Scan
-        uses: docker://ghcr.io/rediverio/rediver-agent:ci
+        uses: docker://rediverio/rediver-agent:ci
         with:
           args: >-
             -tools ${{ github.event.inputs.tools || 'semgrep,gitleaks,trivy' }}
@@ -129,7 +129,7 @@ jobs:
           fi
 
       - name: Scan container with Trivy
-        uses: docker://ghcr.io/rediverio/rediver-agent:ci
+        uses: docker://rediverio/rediver-agent:ci
         with:
           args: >-
             -tool trivy-image

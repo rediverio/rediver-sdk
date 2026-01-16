@@ -1,24 +1,24 @@
-# Rediver Agent Configuration for Semgrep
-# Generated from Rediver UI
+# Rediver Agent Configuration Example
+# See agent.yaml.template for full options
 
 agent:
-  name: Semgrep
+  name: "Security Scanner"
   enable_commands: true
   command_poll_interval: 30s
   heartbeat_interval: 1m
 
 rediver:
-  base_url: http://localhost:8080
-  api_key: rdw_d51dd157b4ea8826893c45714b12d27d360ac15c6833d0728f931a8ebb79d1be
-  worker_id: 1912dec4-0bcc-49a4-9241-cc1b7cd20d30
+  base_url: ${REDIVER_API_URL}
+  api_key: ${REDIVER_API_KEY}
+  worker_id: ${REDIVER_WORKER_ID}
 
 scanners:
   - name: semgrep
     enabled: true
-  - name: trivy-fs
+  - name: gitleaks
+    enabled: true
+  - name: trivy
     enabled: true
 
-# Optional: Default scan targets (for standalone mode)
 targets:
-  - /Users/0xmanhnv/Data/Projects/rediverio/rediver-api
-#   - /path/to/project2
+  - .

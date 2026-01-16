@@ -20,7 +20,7 @@ stages:
 
 variables:
   # Rediver configuration
-  REDIVER_IMAGE: ghcr.io/rediverio/rediver-agent:ci
+  REDIVER_IMAGE: rediverio/rediver-agent:ci
 
   # GitLab features
   GIT_DEPTH: 0  # Full clone for diff-based scanning

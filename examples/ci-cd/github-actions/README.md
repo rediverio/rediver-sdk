@@ -32,7 +32,7 @@ When running in a PR context, findings are posted as inline comments on the chan
 
 ```yaml
 - name: Run scan
-  uses: docker://ghcr.io/rediverio/rediver-agent:ci
+  uses: docker://rediverio/rediver-agent:ci
   with:
     args: -tools semgrep -target . -auto-ci -comments
   env:

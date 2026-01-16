@@ -102,6 +102,11 @@ Desktop.ini
 config.local.yaml
 config.local.json
 
+# Agent config (may contain API keys)
+# Keep template, ignore actual config
+agent.yaml
+!agent.yaml.template
+
 # API keys and credentials
 *.pem
 *.key

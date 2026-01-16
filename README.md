@@ -334,7 +334,7 @@ Images are available on both **GitHub Container Registry** and **Docker Hub**:
 |----------|-------|-------------|------|
 | GHCR | `ghcr.io/rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
 | GHCR | `ghcr.io/rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
-| GHCR | `ghcr.io/rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
+| GHCR | `rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
 | Docker Hub | `rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
 | Docker Hub | `rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
 | Docker Hub | `rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
@@ -399,7 +399,7 @@ jobs:
           fetch-depth: 0  # Full history for diff-based scanning
 
       - name: Run Security Scan
-        uses: docker://ghcr.io/rediverio/rediver-agent:ci
+        uses: docker://rediverio/rediver-agent:ci
         with:
           args: >-
             -tools semgrep,gitleaks,trivy
@@ -430,7 +430,7 @@ stages:
 
 security-scan:
   stage: security
-  image: ghcr.io/rediverio/rediver-agent:ci
+  image: rediverio/rediver-agent:ci
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
     REDIVER_API_URL: $REDIVER_API_URL

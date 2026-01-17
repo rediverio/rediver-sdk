@@ -24,19 +24,19 @@ const (
 // Scanner implements the ScaScanner interface for Trivy.
 type Scanner struct {
 	// Configuration
-	Binary       string        // Path to trivy binary (default: "trivy")
-	Timeout      time.Duration // Scan timeout (default: 30 minutes)
-	Verbose      bool          // Enable verbose output
-	CacheDir     string        // Trivy cache directory
+	Binary   string        // Path to trivy binary (default: "trivy")
+	Timeout  time.Duration // Scan timeout (default: 30 minutes)
+	Verbose  bool          // Enable verbose output
+	CacheDir string        // Trivy cache directory
 
 	// Scan options
-	Mode           ScanMode // fs, config, image, repo
-	Scanners       []string // vuln, misconfig, secret, license
-	Severity       []string // CRITICAL, HIGH, MEDIUM, LOW, UNKNOWN
-	IgnoreUnfixed  bool     // Ignore unfixed vulnerabilities
-	SkipDBUpdate   bool     // Skip vulnerability DB update
-	OfflineScan    bool     // Run in offline mode
-	TrivyExitCode  int      // Exit code when vulnerabilities found (default: 0)
+	Mode          ScanMode // fs, config, image, repo
+	Scanners      []string // vuln, misconfig, secret, license
+	Severity      []string // CRITICAL, HIGH, MEDIUM, LOW, UNKNOWN
+	IgnoreUnfixed bool     // Ignore unfixed vulnerabilities
+	SkipDBUpdate  bool     // Skip vulnerability DB update
+	OfflineScan   bool     // Run in offline mode
+	TrivyExitCode int      // Exit code when vulnerabilities found (default: 0)
 
 	// Output options
 	OutputFile string // Output file path (empty = stdout)
@@ -413,14 +413,14 @@ func (s *Scanner) convertToScaResult(report *Report, target string) *core.ScaRes
 			fingerprint := generateFingerprint(vuln.VulnerabilityID, vuln.PkgName, vuln.InstalledVersion, target)
 
 			finding := core.Vulnerability{
-				ID:          vuln.VulnerabilityID,
-				Fingerprint: fingerprint,
-				PkgID:       fmt.Sprintf("%s@%s", vuln.PkgName, vuln.InstalledVersion),
-				PkgName:     vuln.PkgName,
-				PkgVersion:  vuln.InstalledVersion,
-				Name:        vuln.Title,
-				Description: vuln.Description,
-				Severity:    GetRISSeverity(vuln.Severity),
+				ID:           vuln.VulnerabilityID,
+				Fingerprint:  fingerprint,
+				PkgID:        fmt.Sprintf("%s@%s", vuln.PkgName, vuln.InstalledVersion),
+				PkgName:      vuln.PkgName,
+				PkgVersion:   vuln.InstalledVersion,
+				Name:         vuln.Title,
+				Description:  vuln.Description,
+				Severity:     GetRISSeverity(vuln.Severity),
 				FixedVersion: vuln.FixedVersion,
 				Metadata: &core.VulnerabilityMetadata{
 					CWEs:       vuln.CweIDs,

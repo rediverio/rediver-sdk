@@ -357,19 +357,19 @@ type SastFinding struct {
 	Snippet     string `json:"snippet"`
 
 	// Metadata
-	CWEs       []string          `json:"cwes,omitempty"`
-	References []string          `json:"references,omitempty"`
-	DataFlow   []DataFlowStep    `json:"data_flow,omitempty"`
-	Fix        string            `json:"fix,omitempty"`
+	CWEs       []string       `json:"cwes,omitempty"`
+	References []string       `json:"references,omitempty"`
+	DataFlow   []DataFlowStep `json:"data_flow,omitempty"`
+	Fix        string         `json:"fix,omitempty"`
 }
 
 // DataFlowStep represents a step in the data flow trace.
 type DataFlowStep struct {
-	File        string `json:"file"`
-	Line        int    `json:"line"`
-	Column      int    `json:"column"`
-	Content     string `json:"content"`
-	StepType    string `json:"step_type"` // source, intermediate, sink
+	File     string `json:"file"`
+	Line     int    `json:"line"`
+	Column   int    `json:"column"`
+	Content  string `json:"content"`
+	StepType string `json:"step_type"` // source, intermediate, sink
 }
 
 // ParseToSastResult parses semgrep JSON output to SastResult.

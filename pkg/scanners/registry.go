@@ -302,7 +302,9 @@ type TrivyOptions struct {
 // =============================================================================
 
 // CheckInstalled checks if a scanner is installed and returns version info.
-func CheckInstalled(ctx context.Context, scanner interface{ IsInstalled(context.Context) (bool, string, error) }) (bool, string, error) {
+func CheckInstalled(ctx context.Context, scanner interface {
+	IsInstalled(context.Context) (bool, string, error)
+}) (bool, string, error) {
 	return scanner.IsInstalled(ctx)
 }
 

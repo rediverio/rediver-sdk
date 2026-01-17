@@ -73,11 +73,11 @@ type CommandExecutionResult struct {
 
 // CommandPoller polls the server for pending commands.
 type CommandPoller struct {
-	client       CommandClient
-	executor     CommandExecutor
-	interval     time.Duration
+	client        CommandClient
+	executor      CommandExecutor
+	interval      time.Duration
 	maxConcurrent int
-	allowedTypes map[string]bool
+	allowedTypes  map[string]bool
 
 	running    bool
 	stopCh     chan struct{}

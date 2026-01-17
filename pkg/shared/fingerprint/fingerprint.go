@@ -51,8 +51,8 @@ type Input struct {
 	EndColumn   int
 
 	// SCA-specific fields
-	PackageName    string // Package/dependency name
-	PackageVersion string // Package version
+	PackageName     string // Package/dependency name
+	PackageVersion  string // Package version
 	VulnerabilityID string // CVE ID or other vuln identifier
 
 	// Secret-specific fields

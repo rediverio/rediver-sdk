@@ -93,7 +93,7 @@ func (s *BaseScanner) Capabilities() []string {
 
 // IsInstalled checks if the scanner binary is available.
 func (s *BaseScanner) IsInstalled(ctx context.Context) (bool, string, error) {
-	cmd := exec.CommandContext(ctx, s.binary, "--version")
+	cmd := exec.CommandContext(ctx, s.binary, "--version") //nolint:gosec // Scanner binary is configured, not user input
 	output, err := cmd.Output()
 	if err != nil {
 		return false, "", fmt.Errorf("%s not found: %w", s.binary, err)
@@ -124,7 +124,7 @@ func (s *BaseScanner) Scan(ctx context.Context, target string, opts *ScanOptions
 	defer cancel()
 
 	// Create command
-	cmd := exec.CommandContext(execCtx, s.binary, args...)
+	cmd := exec.CommandContext(execCtx, s.binary, args...) //nolint:gosec // Scanner binary is configured, not user input
 
 	// Set working directory
 	if opts != nil && opts.TargetDir != "" {

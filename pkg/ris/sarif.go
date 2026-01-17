@@ -21,10 +21,10 @@ type SARIFLog struct {
 
 // SARIFRun represents a single run of a tool.
 type SARIFRun struct {
-	Tool        SARIFTool          `json:"tool"`
-	Results     []SARIFResult      `json:"results"`
-	Artifacts   []SARIFArtifact    `json:"artifacts,omitempty"`
-	Invocations []SARIFInvocation  `json:"invocations,omitempty"`
+	Tool        SARIFTool         `json:"tool"`
+	Results     []SARIFResult     `json:"results"`
+	Artifacts   []SARIFArtifact   `json:"artifacts,omitempty"`
+	Invocations []SARIFInvocation `json:"invocations,omitempty"`
 }
 
 // SARIFTool describes the tool.

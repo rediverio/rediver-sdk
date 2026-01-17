@@ -30,19 +30,19 @@ type Report struct {
 
 // Metadata contains scan metadata.
 type Metadata struct {
-	OS          *OSInfo          `json:"OS,omitempty"`
-	ImageID     string           `json:"ImageID,omitempty"`
-	DiffIDs     []string         `json:"DiffIDs,omitempty"`
-	RepoTags    []string         `json:"RepoTags,omitempty"`
-	RepoDigests []string         `json:"RepoDigests,omitempty"`
-	ImageConfig *ImageConfig     `json:"ImageConfig,omitempty"`
+	OS          *OSInfo      `json:"OS,omitempty"`
+	ImageID     string       `json:"ImageID,omitempty"`
+	DiffIDs     []string     `json:"DiffIDs,omitempty"`
+	RepoTags    []string     `json:"RepoTags,omitempty"`
+	RepoDigests []string     `json:"RepoDigests,omitempty"`
+	ImageConfig *ImageConfig `json:"ImageConfig,omitempty"`
 }
 
 // OSInfo contains OS information.
 type OSInfo struct {
-	Family  string `json:"Family"`
-	Name    string `json:"Name"`
-	EOSL    bool   `json:"EOSL,omitempty"`
+	Family string `json:"Family"`
+	Name   string `json:"Name"`
+	EOSL   bool   `json:"EOSL,omitempty"`
 }
 
 // ImageConfig contains container image configuration.
@@ -53,13 +53,13 @@ type ImageConfig struct {
 
 // Result represents a single scan result (per target).
 type Result struct {
-	Target            string              `json:"Target"`
-	Class             string              `json:"Class"` // os-pkgs, lang-pkgs, config, secret
-	Type              string              `json:"Type"`  // alpine, debian, go, npm, terraform, etc.
-	Vulnerabilities   []Vulnerability     `json:"Vulnerabilities,omitempty"`
-	Misconfigurations []Misconfiguration  `json:"Misconfigurations,omitempty"`
-	Secrets           []Secret            `json:"Secrets,omitempty"`
-	Licenses          []License           `json:"Licenses,omitempty"`
+	Target            string             `json:"Target"`
+	Class             string             `json:"Class"` // os-pkgs, lang-pkgs, config, secret
+	Type              string             `json:"Type"`  // alpine, debian, go, npm, terraform, etc.
+	Vulnerabilities   []Vulnerability    `json:"Vulnerabilities,omitempty"`
+	Misconfigurations []Misconfiguration `json:"Misconfigurations,omitempty"`
+	Secrets           []Secret           `json:"Secrets,omitempty"`
+	Licenses          []License          `json:"Licenses,omitempty"`
 }
 
 // =============================================================================
@@ -68,23 +68,23 @@ type Result struct {
 
 // Vulnerability represents a detected vulnerability.
 type Vulnerability struct {
-	VulnerabilityID  string   `json:"VulnerabilityID"`
-	PkgID            string   `json:"PkgID,omitempty"`
-	PkgName          string   `json:"PkgName"`
-	PkgPath          string   `json:"PkgPath,omitempty"`
-	InstalledVersion string   `json:"InstalledVersion"`
-	FixedVersion     string   `json:"FixedVersion,omitempty"`
-	Layer            *Layer   `json:"Layer,omitempty"`
-	SeveritySource   string   `json:"SeveritySource,omitempty"`
-	PrimaryURL       string   `json:"PrimaryURL,omitempty"`
+	VulnerabilityID  string      `json:"VulnerabilityID"`
+	PkgID            string      `json:"PkgID,omitempty"`
+	PkgName          string      `json:"PkgName"`
+	PkgPath          string      `json:"PkgPath,omitempty"`
+	InstalledVersion string      `json:"InstalledVersion"`
+	FixedVersion     string      `json:"FixedVersion,omitempty"`
+	Layer            *Layer      `json:"Layer,omitempty"`
+	SeveritySource   string      `json:"SeveritySource,omitempty"`
+	PrimaryURL       string      `json:"PrimaryURL,omitempty"`
 	DataSource       *DataSource `json:"DataSource,omitempty"`
 
 	// Vulnerability details
-	Title           string   `json:"Title,omitempty"`
-	Description     string   `json:"Description,omitempty"`
-	Severity        string   `json:"Severity"`
-	CweIDs          []string `json:"CweIDs,omitempty"`
-	VendorSeverity  map[string]int `json:"VendorSeverity,omitempty"`
+	Title          string         `json:"Title,omitempty"`
+	Description    string         `json:"Description,omitempty"`
+	Severity       string         `json:"Severity"`
+	CweIDs         []string       `json:"CweIDs,omitempty"`
+	VendorSeverity map[string]int `json:"VendorSeverity,omitempty"`
 
 	// CVSS scores
 	CVSS map[string]CVSSData `json:"CVSS,omitempty"`
@@ -127,8 +127,8 @@ type CVSSData struct {
 
 // Misconfiguration represents a detected misconfiguration.
 type Misconfiguration struct {
-	Type        string   `json:"Type"`        // Terraform, Dockerfile, Kubernetes, etc.
-	ID          string   `json:"ID"`          // AVD-AWS-0001
+	Type        string   `json:"Type"` // Terraform, Dockerfile, Kubernetes, etc.
+	ID          string   `json:"ID"`   // AVD-AWS-0001
 	AVDID       string   `json:"AVDID,omitempty"`
 	Title       string   `json:"Title"`
 	Description string   `json:"Description"`
@@ -196,13 +196,13 @@ type Secret struct {
 
 // License represents a detected license.
 type License struct {
-	Severity   string `json:"Severity"`
-	Category   string `json:"Category"`
-	PkgName    string `json:"PkgName"`
-	FilePath   string `json:"FilePath,omitempty"`
-	Name       string `json:"Name"`
+	Severity   string  `json:"Severity"`
+	Category   string  `json:"Category"`
+	PkgName    string  `json:"PkgName"`
+	FilePath   string  `json:"FilePath,omitempty"`
+	Name       string  `json:"Name"`
 	Confidence float64 `json:"Confidence"`
-	Link       string `json:"Link,omitempty"`
+	Link       string  `json:"Link,omitempty"`
 }
 
 // =============================================================================

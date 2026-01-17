@@ -57,10 +57,10 @@ type MRCommentOption struct {
 
 // ManualEnv is a manual/local environment when no CI is detected.
 type ManualEnv struct {
-	repoURL    string
-	branch     string
-	commitSha  string
-	projectID  string
+	repoURL   string
+	branch    string
+	commitSha string
+	projectID string
 }
 
 // NewManualEnv creates a manual environment with optional override values.
@@ -72,21 +72,21 @@ func NewManualEnv(repoURL, branch, commitSha string) *ManualEnv {
 	}
 }
 
-func (m *ManualEnv) Provider() string             { return ProviderManual }
-func (m *ManualEnv) IsActive() bool               { return true }
-func (m *ManualEnv) ProjectID() string            { return m.projectID }
-func (m *ManualEnv) ProjectName() string          { return m.repoURL }
-func (m *ManualEnv) ProjectURL() string           { return m.repoURL }
-func (m *ManualEnv) BlobURL() string              { return "" }
-func (m *ManualEnv) CommitSha() string            { return m.commitSha }
-func (m *ManualEnv) CommitBranch() string         { return m.branch }
-func (m *ManualEnv) CommitTitle() string          { return "" }
-func (m *ManualEnv) CommitTag() string            { return "" }
-func (m *ManualEnv) DefaultBranch() string        { return "main" }
-func (m *ManualEnv) MergeRequestID() string       { return "" }
-func (m *ManualEnv) MergeRequestTitle() string    { return "" }
-func (m *ManualEnv) SourceBranch() string         { return "" }
-func (m *ManualEnv) TargetBranch() string         { return "" }
-func (m *ManualEnv) TargetBranchSha() string      { return "" }
-func (m *ManualEnv) JobURL() string               { return "" }
+func (m *ManualEnv) Provider() string                        { return ProviderManual }
+func (m *ManualEnv) IsActive() bool                          { return true }
+func (m *ManualEnv) ProjectID() string                       { return m.projectID }
+func (m *ManualEnv) ProjectName() string                     { return m.repoURL }
+func (m *ManualEnv) ProjectURL() string                      { return m.repoURL }
+func (m *ManualEnv) BlobURL() string                         { return "" }
+func (m *ManualEnv) CommitSha() string                       { return m.commitSha }
+func (m *ManualEnv) CommitBranch() string                    { return m.branch }
+func (m *ManualEnv) CommitTitle() string                     { return "" }
+func (m *ManualEnv) CommitTag() string                       { return "" }
+func (m *ManualEnv) DefaultBranch() string                   { return "main" }
+func (m *ManualEnv) MergeRequestID() string                  { return "" }
+func (m *ManualEnv) MergeRequestTitle() string               { return "" }
+func (m *ManualEnv) SourceBranch() string                    { return "" }
+func (m *ManualEnv) TargetBranch() string                    { return "" }
+func (m *ManualEnv) TargetBranchSha() string                 { return "" }
+func (m *ManualEnv) JobURL() string                          { return "" }
 func (m *ManualEnv) CreateMRComment(_ MRCommentOption) error { return nil }

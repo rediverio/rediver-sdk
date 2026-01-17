@@ -23,11 +23,11 @@ type Report struct {
 
 // Result represents a single semgrep finding.
 type Result struct {
-	CheckID string  `json:"check_id"`
-	Path    string  `json:"path"`
-	Start   Region  `json:"start"`
-	End     Region  `json:"end"`
-	Extra   Extra   `json:"extra"`
+	CheckID string `json:"check_id"`
+	Path    string `json:"path"`
+	Start   Region `json:"start"`
+	End     Region `json:"end"`
+	Extra   Extra  `json:"extra"`
 }
 
 // Region represents a position in a file.
@@ -69,7 +69,7 @@ type Metadata struct {
 	References []string `json:"references,omitempty"`
 
 	// CWE/OWASP
-	CWE  []string `json:"cwe,omitempty"`
+	CWE   []string `json:"cwe,omitempty"`
 	OWASP []string `json:"owasp,omitempty"`
 
 	// Semgrep specific
@@ -144,7 +144,7 @@ type Error struct {
 
 // Paths contains scanned and skipped paths.
 type Paths struct {
-	Scanned []string `json:"scanned,omitempty"`
+	Scanned []string      `json:"scanned,omitempty"`
 	Skipped []SkippedPath `json:"skipped,omitempty"`
 }
 

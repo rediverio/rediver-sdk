@@ -141,7 +141,7 @@ func (c *BackoffConfig) applyJitter(interval time.Duration) time.Duration {
 	// Calculate jitter range: [1-jitter, 1+jitter]
 	// For jitter=0.1, range is [0.9, 1.1]
 	jitterRange := float64(interval) * jitter
-	jitterValue := (rand.Float64()*2 - 1) * jitterRange // random in [-jitterRange, +jitterRange]
+	jitterValue := (rand.Float64()*2 - 1) * jitterRange //nolint:gosec // math/rand is acceptable for jitter, not security-sensitive
 
 	return time.Duration(float64(interval) + jitterValue)
 }

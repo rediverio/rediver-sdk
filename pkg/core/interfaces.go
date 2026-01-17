@@ -62,7 +62,7 @@ type ScanResult struct {
 	DurationMs int64 `json:"duration_ms"`
 
 	// Output
-	ExitCode int    `json:"exit_code"`
+	ExitCode  int    `json:"exit_code"`
 	RawOutput []byte `json:"raw_output,omitempty"`
 	Stderr    string `json:"stderr,omitempty"`
 
@@ -117,7 +117,7 @@ type ScaScanOptions struct {
 	IncludeDevDeps bool `yaml:"include_dev_deps" json:"include_dev_deps"`
 
 	// Output
-	GenerateSBOM bool `yaml:"generate_sbom" json:"generate_sbom"`
+	GenerateSBOM bool   `yaml:"generate_sbom" json:"generate_sbom"`
 	SBOMFormat   string `yaml:"sbom_format" json:"sbom_format"` // cyclonedx, spdx
 
 	// Verbose
@@ -141,18 +141,18 @@ type ScaResult struct {
 
 // Package represents a software package.
 type Package struct {
-	ID       string `json:"id"`        // Package URL or unique identifier
-	Name     string `json:"name"`      // Package name
-	Version  string `json:"version"`   // Installed version
-	Type     string `json:"type"`      // npm, maven, pip, etc.
+	ID       string   `json:"id"`       // Package URL or unique identifier
+	Name     string   `json:"name"`     // Package name
+	Version  string   `json:"version"`  // Installed version
+	Type     string   `json:"type"`     // npm, maven, pip, etc.
 	Licenses []string `json:"licenses"` // License identifiers
-	PURL     string `json:"purl"`      // Package URL (purl spec)
+	PURL     string   `json:"purl"`     // Package URL (purl spec)
 }
 
 // PackageDependency represents a dependency relationship.
 type PackageDependency struct {
-	PackageID    string   `json:"package_id"`    // Parent package
-	Dependencies []string `json:"dependencies"`  // Child package IDs
+	PackageID    string   `json:"package_id"`   // Parent package
+	Dependencies []string `json:"dependencies"` // Child package IDs
 }
 
 // Vulnerability represents a security vulnerability in a package.
@@ -178,11 +178,11 @@ type Vulnerability struct {
 
 // VulnerabilityMetadata contains additional vulnerability details.
 type VulnerabilityMetadata struct {
-	CWEs       []string `json:"cwes,omitempty"`       // CWE identifiers
-	References []string `json:"references,omitempty"` // Advisory URLs
-	CVSSScore  float64  `json:"cvss_score,omitempty"` // CVSS score
+	CWEs       []string `json:"cwes,omitempty"`        // CWE identifiers
+	References []string `json:"references,omitempty"`  // Advisory URLs
+	CVSSScore  float64  `json:"cvss_score,omitempty"`  // CVSS score
 	CVSSVector string   `json:"cvss_vector,omitempty"` // CVSS vector string
-	Source     string   `json:"source,omitempty"`     // NVD, GHSA, etc.
+	Source     string   `json:"source,omitempty"`      // NVD, GHSA, etc.
 }
 
 // =============================================================================
@@ -233,8 +233,8 @@ type SecretResult struct {
 // SecretFinding represents a detected secret.
 type SecretFinding struct {
 	// Identity
-	RuleID      string `json:"rule_id"`      // Detection rule ID
-	Fingerprint string `json:"fingerprint"`  // For deduplication
+	RuleID      string `json:"rule_id"`     // Detection rule ID
+	Fingerprint string `json:"fingerprint"` // For deduplication
 
 	// Classification
 	SecretType string `json:"secret_type"` // api_key, password, token, etc.
@@ -248,7 +248,7 @@ type SecretFinding struct {
 	EndColumn   int    `json:"end_column"`
 
 	// Content
-	Match       string `json:"match"`       // Full matched line
+	Match       string `json:"match"`        // Full matched line
 	MaskedValue string `json:"masked_value"` // Redacted secret
 
 	// Metadata
@@ -321,10 +321,10 @@ type Collector interface {
 // CollectOptions configures data collection.
 type CollectOptions struct {
 	// Source configuration
-	SourceURL  string            `yaml:"source_url" json:"source_url"`
-	APIKey     string            `yaml:"api_key" json:"api_key"`
-	Headers    map[string]string `yaml:"headers" json:"headers"`
-	Query      map[string]string `yaml:"query" json:"query"`
+	SourceURL string            `yaml:"source_url" json:"source_url"`
+	APIKey    string            `yaml:"api_key" json:"api_key"`
+	Headers   map[string]string `yaml:"headers" json:"headers"`
+	Query     map[string]string `yaml:"query" json:"query"`
 
 	// Filtering
 	Since      int64    `yaml:"since" json:"since"` // Unix timestamp
@@ -347,9 +347,9 @@ type CollectResult struct {
 	DurationMs  int64 `json:"duration_ms"`
 
 	// Results
-	Reports     []*ris.Report `json:"reports"`
-	TotalItems  int           `json:"total_items"`
-	ErrorItems  int           `json:"error_items"`
+	Reports    []*ris.Report `json:"reports"`
+	TotalItems int           `json:"total_items"`
+	ErrorItems int           `json:"error_items"`
 
 	// Cursor for pagination
 	NextCursor string `json:"next_cursor,omitempty"`
@@ -400,18 +400,18 @@ const (
 
 // AgentStatus represents the agent's current state.
 type AgentStatus struct {
-	Name        string     `json:"name"`
-	Status      AgentState `json:"status"`
-	StartedAt   int64      `json:"started_at,omitempty"`
-	Uptime      int64      `json:"uptime_seconds,omitempty"`
-	Scanners    []string   `json:"scanners"`
-	Collectors  []string   `json:"collectors"`
-	LastScan    int64      `json:"last_scan,omitempty"`
-	LastCollect int64      `json:"last_collect,omitempty"`
-	TotalScans  int64      `json:"total_scans"`
-	TotalFindings int64    `json:"total_findings"`
-	Errors      int64      `json:"errors"`
-	Message     string     `json:"message,omitempty"`
+	Name          string     `json:"name"`
+	Status        AgentState `json:"status"`
+	StartedAt     int64      `json:"started_at,omitempty"`
+	Uptime        int64      `json:"uptime_seconds,omitempty"`
+	Scanners      []string   `json:"scanners"`
+	Collectors    []string   `json:"collectors"`
+	LastScan      int64      `json:"last_scan,omitempty"`
+	LastCollect   int64      `json:"last_collect,omitempty"`
+	TotalScans    int64      `json:"total_scans"`
+	TotalFindings int64      `json:"total_findings"`
+	Errors        int64      `json:"errors"`
+	Message       string     `json:"message,omitempty"`
 }
 
 // =============================================================================
@@ -465,8 +465,8 @@ type ProcessOptions struct {
 	ParseOptions *ParseOptions `yaml:"parse" json:"parse"`
 
 	// Push options
-	Push      bool `yaml:"push" json:"push"`
-	SaveLocal bool `yaml:"save_local" json:"save_local"`
+	Push      bool   `yaml:"push" json:"push"`
+	SaveLocal bool   `yaml:"save_local" json:"save_local"`
 	OutputDir string `yaml:"output_dir" json:"output_dir"`
 
 	// Retry

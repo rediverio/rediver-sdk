@@ -65,9 +65,8 @@ type RetryWorker struct {
 	onExhaust func(item *QueueItem) // Called when item exhausts all retries
 
 	// Statistics
-	stats     WorkerStats
-	statsMu   sync.RWMutex
-	statsLock sync.Mutex
+	stats   WorkerStats
+	statsMu sync.RWMutex
 
 	verbose bool
 }

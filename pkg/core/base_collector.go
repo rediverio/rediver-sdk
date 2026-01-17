@@ -423,8 +423,9 @@ func (c *WebhookCollector) Start(ctx context.Context) error {
 	mux.HandleFunc("/health", c.handleHealth)
 
 	c.server = &http.Server{
-		Addr:    c.listenAddr,
-		Handler: mux,
+		Addr:              c.listenAddr,
+		Handler:           mux,
+		ReadHeaderTimeout: 10 * time.Second, // Prevent Slowloris attacks
 	}
 
 	if c.verbose {

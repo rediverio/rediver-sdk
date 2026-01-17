@@ -94,13 +94,13 @@ func NormalizeSeverity(sev string) string {
 type PackageType string
 
 const (
-	PackageTypeMaven  PackageType = "maven"
-	PackageTypeNPM    PackageType = "npm"
-	PackageTypePyPI   PackageType = "pip"
-	PackageTypeGo     PackageType = "gomod"
-	PackageTypeCargo  PackageType = "cargo"
-	PackageTypeNuGet  PackageType = "nuget"
-	PackageTypeGem    PackageType = "gem"
+	PackageTypeMaven    PackageType = "maven"
+	PackageTypeNPM      PackageType = "npm"
+	PackageTypePyPI     PackageType = "pip"
+	PackageTypeGo       PackageType = "gomod"
+	PackageTypeCargo    PackageType = "cargo"
+	PackageTypeNuGet    PackageType = "nuget"
+	PackageTypeGem      PackageType = "gem"
 	PackageTypeComposer PackageType = "composer"
 )
 

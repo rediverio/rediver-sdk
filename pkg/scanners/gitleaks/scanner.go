@@ -277,8 +277,8 @@ func (s *Scanner) Scan(ctx context.Context, target string, opts *core.SecretScan
 // buildArgs builds the gitleaks command arguments.
 func (s *Scanner) buildArgs(target, outputFile string, opts *core.SecretScanOptions) []string {
 	args := []string{
-		"dir",     // Scan directory mode
-		target,    // Target directory
+		"dir",  // Scan directory mode
+		target, // Target directory
 		"--report-format", "json",
 		"--report-path", outputFile,
 		"--exit-code", "0", // Don't fail on findings

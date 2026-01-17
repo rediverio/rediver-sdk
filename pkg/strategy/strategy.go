@@ -56,11 +56,11 @@ const (
 
 // ScanContext holds the context for determining scan strategy.
 type ScanContext struct {
-	GitEnv           gitenv.GitEnv
+	GitEnv            gitenv.GitEnv
 	BaselineCommitSha string
-	RepoPath         string
-	MaxChangedFiles  int
-	Verbose          bool
+	RepoPath          string
+	MaxChangedFiles   int
+	Verbose           bool
 }
 
 // DetermineStrategy determines the scan strategy based on context.

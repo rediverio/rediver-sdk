@@ -500,7 +500,7 @@ func runOnce(ctx context.Context, cfg *Config, pusher core.Pusher, push, outputJ
 		data, _ := json.MarshalIndent(output, "", "  ")
 
 		if outputFile != "" {
-			if err := os.WriteFile(outputFile, data, 0644); err != nil {
+			if err := os.WriteFile(outputFile, data, 0600); err != nil {
 				fmt.Fprintf(os.Stderr, "Error writing output file: %v\n", err)
 				os.Exit(1)
 			}
@@ -1090,7 +1090,7 @@ func installToolsInteractive(ctx context.Context, tools []ToolInfo, osType strin
 		}
 
 		// Execute the install command
-		cmd := exec.CommandContext(ctx, parts[0], parts[1:]...)
+		cmd := exec.CommandContext(ctx, parts[0], parts[1:]...) //nolint:gosec // Intentional tool installation command
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 

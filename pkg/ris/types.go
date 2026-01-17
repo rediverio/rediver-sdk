@@ -693,14 +693,14 @@ type CoreContract struct {
 
 // AuditReport represents a security audit report.
 type AuditReport struct {
-	Auditor     string     `json:"auditor"`
-	ReportURL   string     `json:"report_url,omitempty"`
-	Date        *time.Time `json:"date,omitempty"`
-	Scope       string     `json:"scope,omitempty"`
-	CriticalCount int      `json:"critical_count,omitempty"`
-	HighCount     int      `json:"high_count,omitempty"`
-	MediumCount   int      `json:"medium_count,omitempty"`
-	LowCount      int      `json:"low_count,omitempty"`
+	Auditor       string     `json:"auditor"`
+	ReportURL     string     `json:"report_url,omitempty"`
+	Date          *time.Time `json:"date,omitempty"`
+	Scope         string     `json:"scope,omitempty"`
+	CriticalCount int        `json:"critical_count,omitempty"`
+	HighCount     int        `json:"high_count,omitempty"`
+	MediumCount   int        `json:"medium_count,omitempty"`
+	LowCount      int        `json:"low_count,omitempty"`
 }
 
 // NFTCollectionDetails contains NFT collection-specific details.
@@ -861,8 +861,8 @@ type Finding struct {
 type FindingStatus string
 
 const (
-	FindingStatusOpen         FindingStatus = "open"
-	FindingStatusResolved     FindingStatus = "resolved"
+	FindingStatusOpen          FindingStatus = "open"
+	FindingStatusResolved      FindingStatus = "resolved"
 	FindingStatusFalsePositive FindingStatus = "false_positive"
 	FindingStatusAcceptedRisk  FindingStatus = "accepted_risk"
 	FindingStatusInProgress    FindingStatus = "in_progress"
@@ -1349,22 +1349,22 @@ const (
 	Web3VulnBlockHashDependence Web3VulnerabilityClass = "blockhash_dependence" // SWC-120
 
 	// DeFi-specific
-	Web3VulnFlashLoan           Web3VulnerabilityClass = "flash_loan_attack"
-	Web3VulnOracleManipulation  Web3VulnerabilityClass = "oracle_manipulation"
-	Web3VulnFrontRunning        Web3VulnerabilityClass = "front_running"
-	Web3VulnSandwichAttack      Web3VulnerabilityClass = "sandwich_attack"
-	Web3VulnSlippage            Web3VulnerabilityClass = "slippage_attack"
-	Web3VulnPriceManipulation   Web3VulnerabilityClass = "price_manipulation"
-	Web3VulnGovernanceAttack    Web3VulnerabilityClass = "governance_attack"
-	Web3VulnLiquidityDrain      Web3VulnerabilityClass = "liquidity_drain"
-	Web3VulnMEV                 Web3VulnerabilityClass = "mev_vulnerability"
+	Web3VulnFlashLoan          Web3VulnerabilityClass = "flash_loan_attack"
+	Web3VulnOracleManipulation Web3VulnerabilityClass = "oracle_manipulation"
+	Web3VulnFrontRunning       Web3VulnerabilityClass = "front_running"
+	Web3VulnSandwichAttack     Web3VulnerabilityClass = "sandwich_attack"
+	Web3VulnSlippage           Web3VulnerabilityClass = "slippage_attack"
+	Web3VulnPriceManipulation  Web3VulnerabilityClass = "price_manipulation"
+	Web3VulnGovernanceAttack   Web3VulnerabilityClass = "governance_attack"
+	Web3VulnLiquidityDrain     Web3VulnerabilityClass = "liquidity_drain"
+	Web3VulnMEV                Web3VulnerabilityClass = "mev_vulnerability"
 
 	// Token-specific
-	Web3VulnHoneypot           Web3VulnerabilityClass = "honeypot"
-	Web3VulnHiddenMint         Web3VulnerabilityClass = "hidden_mint"
-	Web3VulnHiddenFee          Web3VulnerabilityClass = "hidden_fee"
-	Web3VulnBlacklistAbuse     Web3VulnerabilityClass = "blacklist_abuse"
-	Web3VulnRenounceOwnership  Web3VulnerabilityClass = "fake_renounce"
+	Web3VulnHoneypot          Web3VulnerabilityClass = "honeypot"
+	Web3VulnHiddenMint        Web3VulnerabilityClass = "hidden_mint"
+	Web3VulnHiddenFee         Web3VulnerabilityClass = "hidden_fee"
+	Web3VulnBlacklistAbuse    Web3VulnerabilityClass = "blacklist_abuse"
+	Web3VulnRenounceOwnership Web3VulnerabilityClass = "fake_renounce"
 
 	// Proxy & Upgrade
 	Web3VulnStorageCollision   Web3VulnerabilityClass = "storage_collision"
@@ -1372,14 +1372,14 @@ const (
 	Web3VulnUpgradeVuln        Web3VulnerabilityClass = "upgrade_vulnerability"
 
 	// Cryptographic
-	Web3VulnWeakRandomness     Web3VulnerabilityClass = "weak_randomness"     // SWC-120
+	Web3VulnWeakRandomness        Web3VulnerabilityClass = "weak_randomness" // SWC-120
 	Web3VulnSignatureMalleability Web3VulnerabilityClass = "signature_malleability"
-	Web3VulnReplayAttack       Web3VulnerabilityClass = "replay_attack"
+	Web3VulnReplayAttack          Web3VulnerabilityClass = "replay_attack"
 
 	// Gas & DoS
-	Web3VulnDosGasLimit        Web3VulnerabilityClass = "dos_gas_limit"
-	Web3VulnUnboundedLoop      Web3VulnerabilityClass = "unbounded_loop"
-	Web3VulnDosBlockStuffing   Web3VulnerabilityClass = "dos_block_stuffing"
+	Web3VulnDosGasLimit      Web3VulnerabilityClass = "dos_gas_limit"
+	Web3VulnUnboundedLoop    Web3VulnerabilityClass = "unbounded_loop"
+	Web3VulnDosBlockStuffing Web3VulnerabilityClass = "dos_block_stuffing"
 
 	// Logic
 	Web3VulnBusinessLogic      Web3VulnerabilityClass = "business_logic"

@@ -41,7 +41,7 @@ func ExecuteScanner(ctx context.Context, cfg *ExecConfig) (*ExecResult, error) {
 		defer cancel()
 	}
 
-	cmd := exec.CommandContext(ctx, cfg.Binary, cfg.Args...)
+	cmd := exec.CommandContext(ctx, cfg.Binary, cfg.Args...) //nolint:gosec // Scanner binary is configured, not user input
 
 	if cfg.WorkDir != "" {
 		cmd.Dir = cfg.WorkDir
@@ -146,7 +146,7 @@ func StreamScanner(ctx context.Context, cfg *ExecConfig, handler OutputHandler) 
 		defer cancel()
 	}
 
-	cmd := exec.CommandContext(ctx, cfg.Binary, cfg.Args...)
+	cmd := exec.CommandContext(ctx, cfg.Binary, cfg.Args...) //nolint:gosec // Scanner binary is configured, not user input
 
 	if cfg.WorkDir != "" {
 		cmd.Dir = cfg.WorkDir

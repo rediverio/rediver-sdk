@@ -165,7 +165,7 @@ func (p *BaseProcessor) saveLocal(report *ris.Report, scannerName, outputDir str
 		return "", fmt.Errorf("marshal report: %w", err)
 	}
 
-	if err := os.WriteFile(filepath, data, 0644); err != nil {
+	if err := os.WriteFile(filepath, data, 0600); err != nil {
 		return "", fmt.Errorf("write file: %w", err)
 	}
 

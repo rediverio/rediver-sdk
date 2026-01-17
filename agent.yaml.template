@@ -30,20 +30,20 @@ agent:
   log_level: info
 
 # -----------------------------------------------------------------------------
-# Rediver Platform Connection
+# Platform Connection
 # -----------------------------------------------------------------------------
-rediver:
-  # Rediver API URL
-  # Use environment variable: ${REDIVER_API_URL}
+server:
+  # API URL
+  # Use environment variable: ${API_URL}
   base_url: "https://api.rediver.io"
 
   # API Key for authentication
-  # Get this from: Rediver UI > Settings > API Keys
-  # Use environment variable: ${REDIVER_API_KEY}
+  # Get this from: UI > Settings > API Keys
+  # Use environment variable: ${API_KEY}
   api_key: "your-api-key-here"
 
   # Worker ID (auto-generated if not provided)
-  # Use environment variable: ${REDIVER_WORKER_ID}
+  # Use environment variable: ${WORKER_ID}
   worker_id: ""
 
   # Request timeout

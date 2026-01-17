@@ -521,10 +521,10 @@ docker pull ghcr.io/rediverio/agent:latest
 docker run --rm -v $(pwd):/scan rediverio/agent:latest \
     -tools semgrep,gitleaks,trivy -target /scan -verbose
 
-# Run scan and push results to Rediver platform
+# Run scan and push results to platform
 docker run --rm -v $(pwd):/scan \
-    -e REDIVER_API_URL=https://api.rediver.io \
-    -e REDIVER_API_KEY=your-api-key \
+    -e API_URL=https://api.rediver.io \
+    -e API_KEY=your-api-key \
     rediverio/agent:latest \
     -tools semgrep,gitleaks,trivy -target /scan -push -verbose
 
@@ -581,8 +581,8 @@ jobs:
             -sarif-output results.sarif
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
-          REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+          API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
@@ -602,8 +602,8 @@ security-scan:
   image: rediverio/agent:ci
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
-    REDIVER_API_URL: $REDIVER_API_URL
-    REDIVER_API_KEY: $REDIVER_API_KEY
+    API_URL: $API_URL
+    API_KEY: $API_KEY
   script:
     - |
       agent \
@@ -637,11 +637,11 @@ security-scan:
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `REDIVER_API_URL` | Yes* | Rediver platform API URL |
-| `REDIVER_API_KEY` | Yes* | API key for authentication |
-| `REDIVER_WORKER_ID` | No | Worker identifier for tracking |
-| `REDIVER_RETRY_QUEUE` | No | Enable retry queue (`true`/`false`) |
-| `REDIVER_RETRY_DIR` | No | Custom retry queue directory |
+| `API_URL` | Yes* | Platform API URL |
+| `API_KEY` | Yes* | API key for authentication |
+| `WORKER_ID` | No | Worker identifier for tracking |
+| `RETRY_QUEUE` | No | Enable retry queue (`true`/`false`) |
+| `RETRY_DIR` | No | Custom retry queue directory |
 | `GITHUB_TOKEN` | Auto | GitHub token (for PR comments) |
 | `GITLAB_TOKEN` | Auto | GitLab token (for MR comments) |
 

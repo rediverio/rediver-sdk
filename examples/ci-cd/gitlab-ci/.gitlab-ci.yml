@@ -19,8 +19,8 @@ stages:
   - container-security
 
 variables:
-  # Rediver configuration
-  REDIVER_IMAGE: rediverio/agent:ci
+  # Agent configuration
+  AGENT_IMAGE: rediverio/agent:ci
 
   # GitLab features
   GIT_DEPTH: 0  # Full clone for diff-based scanning
@@ -37,11 +37,11 @@ variables:
 # Full security scan - runs on all branches
 security-scan:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
-    REDIVER_API_URL: $REDIVER_API_URL
-    REDIVER_API_KEY: $REDIVER_API_KEY
+    API_URL: $API_URL
+    API_KEY: $API_KEY
   script:
     - |
       agent \
@@ -71,11 +71,11 @@ security-scan:
 # MR-specific scan with inline comments
 mr-security-review:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
-    REDIVER_API_URL: $REDIVER_API_URL
-    REDIVER_API_KEY: $REDIVER_API_KEY
+    API_URL: $API_URL
+    API_KEY: $API_KEY
   script:
     - |
       echo "Scanning MR !${CI_MERGE_REQUEST_IID}"
@@ -114,7 +114,7 @@ mr-security-review:
 # Secret scanning only - fast check
 secret-scan:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   script:
     - |
       agent \
@@ -141,7 +141,7 @@ secret-scan:
 # Dependency/SCA scanning
 dependency-scan:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   script:
     - |
       agent \
@@ -163,7 +163,7 @@ dependency-scan:
 # IaC scanning (Terraform, CloudFormation, etc.)
 iac-scan:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   script:
     - |
       agent \
@@ -192,7 +192,7 @@ iac-scan:
 # Container image scanning
 container-scan:
   stage: container-security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   services:
     - docker:dind
   variables:
@@ -236,7 +236,7 @@ container-scan:
 # Weekly full security audit
 weekly-audit:
   stage: security
-  image: $REDIVER_IMAGE
+  image: $AGENT_IMAGE
   script:
     - |
       agent \
@@ -253,5 +253,5 @@ weekly-audit:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
   variables:
-    REDIVER_API_URL: $REDIVER_API_URL
-    REDIVER_API_KEY: $REDIVER_API_KEY
+    API_URL: $API_URL
+    API_KEY: $API_KEY

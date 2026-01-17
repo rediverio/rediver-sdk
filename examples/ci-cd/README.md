@@ -85,7 +85,7 @@ security-scan:
 
 | Variable | Description |
 |----------|-------------|
-| `REDIVER_API_URL` | Rediver platform API URL |
-| `REDIVER_API_KEY` | Rediver platform API key |
+| `API_URL` | Platform API URL |
+| `API_KEY` | Platform API key |
 | `GITHUB_TOKEN` | GitHub token (auto-provided in Actions) |
 | `GITLAB_TOKEN` / `CI_JOB_TOKEN` | GitLab token (auto-provided in CI) |

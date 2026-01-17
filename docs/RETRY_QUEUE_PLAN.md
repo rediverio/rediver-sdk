@@ -359,9 +359,9 @@ agent:
   verbose: true
 
 rediver:
-  base_url: ${REDIVER_API_URL}
-  api_key: ${REDIVER_API_KEY}
-  worker_id: ${REDIVER_WORKER_ID}
+  base_url: ${API_URL}
+  api_key: ${API_KEY}
+  worker_id: ${WORKER_ID}
 
   # Retry queue configuration
   enable_retry_queue: true
@@ -379,15 +379,15 @@ scanners:
 
 ```bash
 # Enable retry queue
-export REDIVER_ENABLE_RETRY_QUEUE=true
+export ENABLE_RETRY_QUEUE=true
 
 # Custom queue directory
-export REDIVER_RETRY_QUEUE_DIR=/var/lib/rediver/retry-queue
+export RETRY_QUEUE_DIR=/var/lib/rediver/retry-queue
 
 # Retry settings
-export REDIVER_RETRY_INTERVAL=5m
-export REDIVER_RETRY_MAX_ATTEMPTS=10
-export REDIVER_RETRY_TTL=168h
+export RETRY_INTERVAL=5m
+export RETRY_MAX_ATTEMPTS=10
+export RETRY_TTL=168h
 ```
 
 ---

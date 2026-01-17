@@ -69,9 +69,9 @@ jobs:
             -sarif-output /github/workspace/results.sarif
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Required: Push results to Rediver platform
-          REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
-          REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+          # Required: Push results to platform
+          API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: Upload SARIF to GitHub Security
         uses: github/codeql-action/upload-sarif@v3

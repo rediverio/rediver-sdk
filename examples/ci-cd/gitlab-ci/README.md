@@ -50,13 +50,13 @@ artifacts:
     container_scanning: container-results.json
 ```
 
-### Push to Rediver Platform
-Send results to Rediver platform for tracking:
+### Push to Platform
+Send results to platform for tracking:
 
 ```yaml
 variables:
-  REDIVER_API_URL: $REDIVER_API_URL
-  REDIVER_API_KEY: $REDIVER_API_KEY
+  API_URL: $API_URL
+  API_KEY: $API_KEY
 script:
   - agent -tools semgrep,gitleaks,trivy -target . -push
 ```
@@ -80,8 +80,8 @@ script:
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `CI_JOB_TOKEN` | Auto | Provided by GitLab, used for MR comments |
-| `REDIVER_API_URL` | Optional | Rediver platform API URL |
-| `REDIVER_API_KEY` | Optional | Rediver platform API key |
+| `API_URL` | Optional | Platform API URL |
+| `API_KEY` | Optional | Platform API key |
 
 ## Job Templates
 

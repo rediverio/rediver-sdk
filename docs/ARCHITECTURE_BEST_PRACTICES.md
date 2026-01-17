@@ -258,8 +258,8 @@ type ScanInfo struct {
 
 ```go
 func GetHandler() Handler {
-    token := os.Getenv("REDIVER_API_KEY")
-    url := os.Getenv("REDIVER_API_URL")
+    token := os.Getenv("API_KEY")
+    url := os.Getenv("API_URL")
 
     if token != "" && url != "" {
         client := NewAPIClient(url, token)
@@ -673,8 +673,8 @@ func setupTestEnv() {
     os.Setenv("GITLAB_CI", "true")
     os.Setenv("CI_PROJECT_ID", "12345")
     os.Setenv("CI_COMMIT_SHA", "abc123")
-    os.Setenv("REDIVER_API_URL", "http://localhost:8080")
-    os.Setenv("REDIVER_API_KEY", "test-token")
+    os.Setenv("API_URL", "http://localhost:8080")
+    os.Setenv("API_KEY", "test-token")
 }
 ```
 
@@ -703,9 +703,9 @@ testdata/
 
 ```bash
 # API Configuration
-REDIVER_API_URL=https://api.rediver.io
-REDIVER_API_KEY=your-api-key
-REDIVER_WORKER_ID=worker-123
+API_URL=https://api.rediver.io
+API_KEY=your-api-key
+WORKER_ID=worker-123
 
 # Scan Configuration
 MAX_CHANGED_FILES=512
@@ -732,9 +732,9 @@ agent:
   scan_interval: 1h
 
 rediver:
-  base_url: ${REDIVER_API_URL}
-  api_key: ${REDIVER_API_KEY}
-  worker_id: ${REDIVER_WORKER_ID}
+  base_url: ${API_URL}
+  api_key: ${API_KEY}
+  worker_id: ${WORKER_ID}
 
 scanners:
   - name: semgrep

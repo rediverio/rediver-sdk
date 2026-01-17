@@ -49,13 +49,13 @@ Upload results to GitHub's Security tab:
     sarif_file: results.sarif
 ```
 
-### Push to Rediver Platform
-Send results to Rediver platform for tracking:
+### Push to Platform
+Send results to platform for tracking:
 
 ```yaml
 env:
-  REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
-  REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+  API_URL: ${{ secrets.API_URL }}
+  API_KEY: ${{ secrets.API_KEY }}
 ```
 
 ## Required Permissions
@@ -72,8 +72,8 @@ permissions:
 | Secret | Required | Description |
 |--------|----------|-------------|
 | `GITHUB_TOKEN` | Auto | Provided by GitHub, used for PR comments |
-| `REDIVER_API_URL` | Optional | Rediver platform API URL |
-| `REDIVER_API_KEY` | Optional | Rediver platform API key |
+| `API_URL` | Optional | Platform API URL |
+| `API_KEY` | Optional | Platform API key |
 
 ## Scanner Options
 

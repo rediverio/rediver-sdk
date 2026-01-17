@@ -7,8 +7,8 @@
 #   - Container scanning
 #
 # Required CI/CD Variables:
-#   - REDIVER_API_URL: Rediver platform URL
-#   - REDIVER_API_KEY: Rediver API key
+#   - API_URL: Platform URL
+#   - API_KEY: API key
 # =============================================================================
 
 stages:
@@ -25,8 +25,8 @@ variables:
   # Image names
   CI_REGISTRY_IMAGE: ${CI_REGISTRY}/${CI_PROJECT_PATH}
 
-  # Rediver settings
-  REDIVER_WORKER_ID: "gitlab-${CI_PROJECT_ID}"
+  # Agent settings
+  WORKER_ID: "gitlab-${CI_PROJECT_ID}"
 
 # =============================================================================
 # Security Scanning

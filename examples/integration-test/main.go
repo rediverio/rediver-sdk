@@ -30,9 +30,9 @@ func main() {
 	// Check required flags
 	if *apiKey == "" {
 		// Try to get from environment
-		*apiKey = os.Getenv("REDIVER_API_KEY")
+		*apiKey = os.Getenv("API_KEY")
 		if *apiKey == "" {
-			log.Fatal("API key is required. Use -api-key flag or REDIVER_API_KEY environment variable")
+			log.Fatal("API key is required. Use -api-key flag or API_KEY environment variable")
 		}
 	}
 

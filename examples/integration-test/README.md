@@ -38,7 +38,7 @@ This example demonstrates how to use the Rediver SDK to:
 ### Option 1: Using environment variable
 
 ```bash
-export REDIVER_API_KEY="your-api-key-here"
+export API_KEY="your-api-key-here"
 
 cd sdk
 go run ./examples/integration-test/
@@ -99,7 +99,7 @@ Base URL: http://localhost:8080
 ## Troubleshooting
 
 ### "API key required"
-- Make sure you pass the API key via `-api-key` flag or `REDIVER_API_KEY` environment variable
+- Make sure you pass the API key via `-api-key` flag or `API_KEY` environment variable
 
 ### "Invalid API key" (401)
 - The API key might be incorrect or the source was deleted

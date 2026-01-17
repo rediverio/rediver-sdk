@@ -46,8 +46,8 @@ jobs:
             -output /github/workspace/results.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
-          REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+          API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: Upload scan results
         if: always()
@@ -88,8 +88,8 @@ jobs:
             -json
             -output /github/workspace/container-results.json
         env:
-          REDIVER_API_URL: ${{ secrets.REDIVER_API_URL }}
-          REDIVER_API_KEY: ${{ secrets.REDIVER_API_KEY }}
+          API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
 
       - name: Upload container scan results
         uses: actions/upload-artifact@v4

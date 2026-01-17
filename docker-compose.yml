@@ -30,9 +30,9 @@ services:
       - ./:/scan:ro # Mount source code (read-only)
       - scan-cache:/cache # Persistent cache for trivy DB
     environment:
-      - REDIVER_API_URL=${REDIVER_API_URL:-}
-      - REDIVER_API_KEY=${REDIVER_API_KEY:-}
-      - REDIVER_WORKER_ID=${REDIVER_WORKER_ID:-}
+      - API_URL=${API_URL:-}
+      - API_KEY=${API_KEY:-}
+      - WORKER_ID=${WORKER_ID:-}
       - SEMGREP_SEND_METRICS=off
     working_dir: /scan
     command: [ "-tools", "semgrep,gitleaks,trivy", "-target", "/scan", "-verbose" ]
@@ -50,9 +50,9 @@ services:
       - ./config.yaml:/config/config.yaml:ro # Mount config file
       - scan-cache:/cache
     environment:
-      - REDIVER_API_URL=${REDIVER_API_URL}
-      - REDIVER_API_KEY=${REDIVER_API_KEY}
-      - REDIVER_WORKER_ID=${REDIVER_WORKER_ID}
+      - API_URL=${API_URL}
+      - API_KEY=${API_KEY}
+      - WORKER_ID=${WORKER_ID}
     restart: unless-stopped
     command: [ "-daemon", "-config", "/config/config.yaml" ]
 
@@ -89,8 +89,8 @@ services:
       - GITHUB_SHA=abc123
       - GITHUB_REF_NAME=main
       - GITHUB_REPOSITORY=rediverio/sdk
-      - REDIVER_API_URL=${REDIVER_API_URL:-}
-      - REDIVER_API_KEY=${REDIVER_API_KEY:-}
+      - API_URL=${API_URL:-}
+      - API_KEY=${API_KEY:-}
     working_dir: /github/workspace
     command: [ "-tools", "semgrep,gitleaks,trivy", "-target", ".", "-auto-ci", "-verbose" ]
 

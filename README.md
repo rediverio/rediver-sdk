@@ -2,6 +2,26 @@
 
 Go SDK for building security scanners, collectors, and agents that integrate with the Rediver platform.
 
+## Installation
+
+```bash
+go get github.com/rediverio/rediver-sdk@latest
+```
+
+For private repositories, configure Go to access GitHub:
+
+```bash
+# Set GOPRIVATE to bypass public proxy
+export GOPRIVATE=github.com/rediverio/*
+
+# Configure Git authentication (choose one):
+# Option A: SSH key (recommended)
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+
+# Option B: GitHub token
+git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+```
+
 ## Quick Start
 
 ### 1. Create a Custom Scanner
@@ -291,6 +311,71 @@ func main() {
 | 10 | 48 hours (max) |
 ```
 
+### 8. Shared Fingerprint Package
+
+The SDK provides unified fingerprint generation for deduplication, shared with the backend:
+
+```go
+package main
+
+import "github.com/rediverio/rediver-sdk/pkg/shared/fingerprint"
+
+func main() {
+    // SAST findings
+    fp := fingerprint.GenerateSAST("src/main.go", "CWE-89", 42, 44)
+
+    // SCA findings
+    fp := fingerprint.GenerateSCA("lodash", "4.17.20", "CVE-2021-23337")
+
+    // Secret findings
+    fp := fingerprint.GenerateSecret("config.yaml", "api-key", 10, "sk_live_xxx")
+
+    // Misconfiguration findings
+    fp := fingerprint.GenerateMisconfiguration("aws_s3_bucket", "my-bucket", "S3-PUBLIC", "main.tf")
+
+    // Auto-detect type based on available fields
+    fp := fingerprint.GenerateAuto(fingerprint.Input{
+        FilePath:        "package.json",
+        PackageName:     "lodash",
+        PackageVersion:  "4.17.20",
+        VulnerabilityID: "CVE-2021-23337",
+    })
+}
+```
+
+### 9. Shared Severity Package
+
+Unified severity mapping across different scanner formats:
+
+```go
+package main
+
+import "github.com/rediverio/rediver-sdk/pkg/shared/severity"
+
+func main() {
+    // Parse severity from various formats
+    level := severity.FromString("HIGH")      // From Trivy
+    level := severity.FromString("ERROR")     // From Semgrep
+    level := severity.FromString("CRITICAL")  // Standard
+
+    // Convert CVSS score to severity
+    level := severity.FromCVSS(9.8)  // Returns severity.Critical
+
+    // Compare severities
+    if severity.Critical.IsHigherThan(severity.High) {
+        fmt.Println("Critical is higher")
+    }
+
+    // Count by severity
+    counts := &severity.CountBySeverity{}
+    for _, finding := range findings {
+        level := severity.FromString(finding.Severity)
+        counts.Increment(level)
+    }
+    fmt.Printf("Critical: %d, High: %d\n", counts.Critical, counts.High)
+}
+```
+
 ## Package Structure
 
 ```
@@ -306,6 +391,9 @@ rediver-sdk/
 │   │   └── trivy/      # Trivy SCA scanner
 │   ├── client/         # Rediver API client
 │   ├── retry/          # Persistent retry queue for network resilience
+│   ├── shared/         # Shared packages (fingerprint, severity)
+│   │   ├── fingerprint/# Unified fingerprint generation
+│   │   └── severity/   # Unified severity mapping
 │   ├── gitenv/         # CI environment detection
 │   ├── strategy/       # Scan strategy determination
 │   └── handler/        # Scan lifecycle handlers

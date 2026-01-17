@@ -26,28 +26,10 @@ jobs:
       - name: Run tests
         run: go test -v ./...
 
-      - name: Build CLI binaries
-        run: |
-          mkdir -p dist
-
-          # Build for multiple platforms
-          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-linux-amd64 ./cmd/agent
-          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o dist/agent-linux-arm64 ./cmd/agent
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-darwin-amd64 ./cmd/agent
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/agent-darwin-arm64 ./cmd/agent
-          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-windows-amd64.exe ./cmd/agent
-
-      - name: Generate checksums
-        run: |
-          cd dist
-          sha256sum * > checksums.txt
-
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          files: |
-            dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

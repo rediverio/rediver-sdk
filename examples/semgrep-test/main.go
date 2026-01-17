@@ -8,9 +8,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/scanners"
-	"github.com/rediverio/rediver-sdk/pkg/scanners/semgrep"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/scanners"
+	"github.com/rediverio/sdk/pkg/scanners/semgrep"
 )
 
 func main() {

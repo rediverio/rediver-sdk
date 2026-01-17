@@ -31,11 +31,11 @@ jobs:
           mkdir -p dist
 
           # Build for multiple platforms
-          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/rediver-agent-linux-amd64 ./cmd/rediver-agent
-          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o dist/rediver-agent-linux-arm64 ./cmd/rediver-agent
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/rediver-agent-darwin-amd64 ./cmd/rediver-agent
-          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/rediver-agent-darwin-arm64 ./cmd/rediver-agent
-          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/rediver-agent-windows-amd64.exe ./cmd/rediver-agent
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-linux-amd64 ./cmd/agent
+          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o dist/agent-linux-arm64 ./cmd/agent
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-darwin-amd64 ./cmd/agent
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o dist/agent-darwin-arm64 ./cmd/agent
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o dist/agent-windows-amd64.exe ./cmd/agent
 
       - name: Generate checksums
         run: |
@@ -59,4 +59,4 @@ jobs:
       - name: Trigger Go Proxy update
         run: |
           # Trigger proxy.golang.org to fetch the new version
-          curl -s "https://proxy.golang.org/github.com/rediverio/rediver-sdk/@v/${{ github.ref_name }}.info" || true
+          curl -s "https://proxy.golang.org/github.com/rediverio/sdk/@v/${{ github.ref_name }}.info" || true

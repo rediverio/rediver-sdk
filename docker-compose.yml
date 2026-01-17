@@ -88,7 +88,7 @@ services:
       - GITHUB_ACTIONS=true
       - GITHUB_SHA=abc123
       - GITHUB_REF_NAME=main
-      - GITHUB_REPOSITORY=rediverio/rediver-sdk
+      - GITHUB_REPOSITORY=rediverio/sdk
       - REDIVER_API_URL=${REDIVER_API_URL:-}
       - REDIVER_API_KEY=${REDIVER_API_KEY:-}
     working_dir: /github/workspace
@@ -97,4 +97,4 @@ services:
 # Persistent volumes
 volumes:
   scan-cache:
-    name: rediver-scan-cache
+    name: scan-cache

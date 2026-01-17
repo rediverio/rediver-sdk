@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/core"
 )
 
 const (

@@ -5,7 +5,7 @@ package core
 import (
 	"context"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // =============================================================================

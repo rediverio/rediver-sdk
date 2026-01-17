@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/core"
 )
 
 // Ensure Client implements core.CommandClient

@@ -5,7 +5,7 @@ Go SDK for building security scanners, collectors, and agents that integrate wit
 ## Installation
 
 ```bash
-go get github.com/rediverio/rediver-sdk@latest
+go get github.com/rediverio/sdk@latest
 ```
 
 For private repositories, configure Go to access GitHub:
@@ -31,7 +31,7 @@ package main
 
 import (
     "context"
-    "github.com/rediverio/rediver-sdk/pkg/core"
+    "github.com/rediverio/sdk/pkg/core"
 )
 
 // MyScanner implements core.Scanner interface
@@ -68,8 +68,8 @@ package main
 import (
     "context"
     "encoding/json"
-    "github.com/rediverio/rediver-sdk/pkg/core"
-    "github.com/rediverio/rediver-sdk/pkg/ris"
+    "github.com/rediverio/sdk/pkg/core"
+    "github.com/rediverio/sdk/pkg/ris"
 )
 
 type MyParser struct{}
@@ -103,7 +103,7 @@ package main
 
 import (
     "context"
-    "github.com/rediverio/rediver-sdk/pkg/core"
+    "github.com/rediverio/sdk/pkg/core"
 )
 
 type MyCollector struct {
@@ -141,8 +141,8 @@ package main
 
 import (
     "context"
-    "github.com/rediverio/rediver-sdk/pkg/scanners"
-    "github.com/rediverio/rediver-sdk/pkg/core"
+    "github.com/rediverio/sdk/pkg/scanners"
+    "github.com/rediverio/sdk/pkg/core"
 )
 
 func main() {
@@ -172,8 +172,8 @@ func main() {
 package main
 
 import (
-    "github.com/rediverio/rediver-sdk/pkg/gitenv"
-    "github.com/rediverio/rediver-sdk/pkg/strategy"
+    "github.com/rediverio/sdk/pkg/gitenv"
+    "github.com/rediverio/sdk/pkg/strategy"
 )
 
 func main() {
@@ -204,8 +204,8 @@ package main
 
 import (
     "context"
-    "github.com/rediverio/rediver-sdk/pkg/client"
-    "github.com/rediverio/rediver-sdk/pkg/ris"
+    "github.com/rediverio/sdk/pkg/client"
+    "github.com/rediverio/sdk/pkg/ris"
 )
 
 func main() {
@@ -240,8 +240,8 @@ package main
 import (
     "context"
     "time"
-    "github.com/rediverio/rediver-sdk/pkg/client"
-    "github.com/rediverio/rediver-sdk/pkg/ris"
+    "github.com/rediverio/sdk/pkg/client"
+    "github.com/rediverio/sdk/pkg/ris"
 )
 
 func main() {
@@ -318,7 +318,7 @@ The SDK provides unified fingerprint generation for deduplication, shared with t
 ```go
 package main
 
-import "github.com/rediverio/rediver-sdk/pkg/shared/fingerprint"
+import "github.com/rediverio/sdk/pkg/shared/fingerprint"
 
 func main() {
     // SAST findings
@@ -350,7 +350,7 @@ Unified severity mapping across different scanner formats:
 ```go
 package main
 
-import "github.com/rediverio/rediver-sdk/pkg/shared/severity"
+import "github.com/rediverio/sdk/pkg/shared/severity"
 
 func main() {
     // Parse severity from various formats
@@ -379,9 +379,7 @@ func main() {
 ## Package Structure
 
 ```
-rediver-sdk/
-├── cmd/                # CLI applications
-│   └── rediver-agent/  # Agent CLI
+sdk/
 ├── pkg/                # Public library code
 │   ├── core/           # Core interfaces and base implementations
 │   ├── ris/            # RIS (Rediver Ingest Schema) types
@@ -456,7 +454,7 @@ type Finding struct {
 
 ```bash
 # From source
-go install github.com/rediverio/rediver-sdk/cmd/rediver-agent@latest
+go install github.com/rediverio/sdk/cmd/agent@latest
 
 # Or build locally
 make build
@@ -466,22 +464,22 @@ make build
 
 ```bash
 # Check available tools
-rediver-agent -list-tools
+agent -list-tools
 
 # Check tool installation
-rediver-agent -check-tools
+agent -check-tools
 
 # Install missing tools interactively
-rediver-agent -install-tools
+agent -install-tools
 
 # Run scan
-rediver-agent -tool semgrep -target ./src -verbose
+agent -tool semgrep -target ./src -verbose
 
 # Run multiple scanners
-rediver-agent -tools semgrep,gitleaks,trivy -target . -push
+agent -tools semgrep,gitleaks,trivy -target . -push
 
 # Daemon mode
-rediver-agent -daemon -config config.yaml
+agent -daemon -config config.yaml
 ```
 
 ### Native Scanners
@@ -503,31 +501,31 @@ Images are available on both **GitHub Container Registry** and **Docker Hub**:
 
 | Registry | Image | Description | Size |
 |----------|-------|-------------|------|
-| GHCR | `ghcr.io/rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
-| GHCR | `ghcr.io/rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
-| GHCR | `rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
-| Docker Hub | `rediverio/rediver-agent:latest` | Full image with all tools | ~1GB |
-| Docker Hub | `rediverio/rediver-agent:slim` | Minimal (tools mounted) | ~20MB |
-| Docker Hub | `rediverio/rediver-agent:ci` | CI/CD optimized | ~1.2GB |
+| GHCR | `ghcr.io/rediverio/agent:latest` | Full image with all tools | ~1GB |
+| GHCR | `ghcr.io/rediverio/agent:slim` | Minimal (tools mounted) | ~20MB |
+| GHCR | `rediverio/agent:ci` | CI/CD optimized | ~1.2GB |
+| Docker Hub | `rediverio/agent:latest` | Full image with all tools | ~1GB |
+| Docker Hub | `rediverio/agent:slim` | Minimal (tools mounted) | ~20MB |
+| Docker Hub | `rediverio/agent:ci` | CI/CD optimized | ~1.2GB |
 
 ### Quick Start
 
 ```bash
 # Pull from Docker Hub
-docker pull rediverio/rediver-agent:latest
+docker pull rediverio/agent:latest
 
 # Or from GHCR
-docker pull ghcr.io/rediverio/rediver-agent:latest
+docker pull ghcr.io/rediverio/agent:latest
 
 # Run scan on current directory
-docker run --rm -v $(pwd):/scan rediverio/rediver-agent:latest \
+docker run --rm -v $(pwd):/scan rediverio/agent:latest \
     -tools semgrep,gitleaks,trivy -target /scan -verbose
 
 # Run scan and push results to Rediver platform
 docker run --rm -v $(pwd):/scan \
     -e REDIVER_API_URL=https://api.rediver.io \
     -e REDIVER_API_KEY=your-api-key \
-    rediverio/rediver-agent:latest \
+    rediverio/agent:latest \
     -tools semgrep,gitleaks,trivy -target /scan -push -verbose
 
 # Using docker-compose
@@ -541,9 +539,9 @@ docker compose -f docker/docker-compose.yml run --rm scan
 make docker-all
 
 # Or individually
-docker build -t rediver-agent:latest -f docker/Dockerfile .
-docker build -t rediver-agent:slim -f docker/Dockerfile.slim .
-docker build -t rediver-agent:ci -f docker/Dockerfile.ci .
+docker build -t agent:latest -f docker/Dockerfile .
+docker build -t agent:slim -f docker/Dockerfile.slim .
+docker build -t agent:ci -f docker/Dockerfile.ci .
 ```
 
 ## CI/CD Integration
@@ -570,7 +568,7 @@ jobs:
           fetch-depth: 0  # Full history for diff-based scanning
 
       - name: Run Security Scan
-        uses: docker://rediverio/rediver-agent:ci
+        uses: docker://rediverio/agent:ci
         with:
           args: >-
             -tools semgrep,gitleaks,trivy
@@ -601,14 +599,14 @@ stages:
 
 security-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
     REDIVER_API_URL: $REDIVER_API_URL
     REDIVER_API_KEY: $REDIVER_API_KEY
   script:
     - |
-      rediver-agent \
+      agent \
         -tools semgrep,gitleaks,trivy \
         -target . \
         -auto-ci \

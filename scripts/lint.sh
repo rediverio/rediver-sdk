@@ -1,5 +1,5 @@
 #!/bin/bash
-# Lint script for rediver-sdk
+# Lint script for sdk
 
 set -e
 

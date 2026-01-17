@@ -1,4 +1,4 @@
-module github.com/rediverio/rediver-sdk
+module github.com/rediverio/sdk
 
 go 1.25
 

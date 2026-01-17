@@ -10,9 +10,9 @@ stages:
 
 security-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
-    - rediver-agent -tools semgrep,gitleaks,trivy -target . -auto-ci -verbose
+    - agent -tools semgrep,gitleaks,trivy -target . -auto-ci -verbose
   artifacts:
     paths:
       - "*.json"

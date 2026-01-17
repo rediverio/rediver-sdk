@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // Parser converts gitleaks output to RIS format.

@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // ReportPusher is the interface for pushing reports to the server.

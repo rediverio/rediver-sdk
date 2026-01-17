@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: docker://rediverio/rediver-agent:ci
+      - uses: docker://rediverio/agent:ci
         with:
           args: -tools semgrep,gitleaks,trivy -target . -auto-ci
         env:
@@ -50,9 +50,9 @@ stages:
 
 security-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
-    - rediver-agent -tools semgrep,gitleaks,trivy -target . -auto-ci
+    - agent -tools semgrep,gitleaks,trivy -target . -auto-ci
 ```
 
 ## Scanner Options

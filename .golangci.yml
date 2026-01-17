@@ -1,4 +1,4 @@
-# golangci-lint configuration for rediver-sdk
+# golangci-lint configuration for sdk
 # https://golangci-lint.run/
 
 run:

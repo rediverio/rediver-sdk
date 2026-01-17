@@ -20,7 +20,7 @@ stages:
 
 variables:
   # Rediver configuration
-  REDIVER_IMAGE: rediverio/rediver-agent:ci
+  REDIVER_IMAGE: rediverio/agent:ci
 
   # GitLab features
   GIT_DEPTH: 0  # Full clone for diff-based scanning
@@ -44,7 +44,7 @@ security-scan:
     REDIVER_API_KEY: $REDIVER_API_KEY
   script:
     - |
-      rediver-agent \
+      agent \
         -tools semgrep,gitleaks,trivy \
         -target . \
         -auto-ci \
@@ -82,7 +82,7 @@ mr-security-review:
       echo "Source: ${CI_MERGE_REQUEST_SOURCE_BRANCH_NAME}"
       echo "Target: ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}"
 
-      rediver-agent \
+      agent \
         -tools semgrep,gitleaks \
         -target . \
         -auto-ci \
@@ -117,7 +117,7 @@ secret-scan:
   image: $REDIVER_IMAGE
   script:
     - |
-      rediver-agent \
+      agent \
         -tool gitleaks \
         -target . \
         -verbose \
@@ -144,7 +144,7 @@ dependency-scan:
   image: $REDIVER_IMAGE
   script:
     - |
-      rediver-agent \
+      agent \
         -tool trivy \
         -target . \
         -verbose \
@@ -166,7 +166,7 @@ iac-scan:
   image: $REDIVER_IMAGE
   script:
     - |
-      rediver-agent \
+      agent \
         -tool trivy-config \
         -target . \
         -verbose \
@@ -207,7 +207,7 @@ container-scan:
   script:
     - |
       if [ -f Dockerfile ]; then
-        rediver-agent \
+        agent \
           -tool trivy-image \
           -target $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA \
           -verbose \
@@ -239,7 +239,7 @@ weekly-audit:
   image: $REDIVER_IMAGE
   script:
     - |
-      rediver-agent \
+      agent \
         -tools semgrep,gitleaks,trivy \
         -target . \
         -verbose \

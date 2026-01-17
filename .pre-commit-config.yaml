@@ -1,4 +1,4 @@
-# Pre-commit configuration for rediver-sdk
+# Pre-commit configuration for sdk
 # https://pre-commit.com/
 #
 # Install: pip install pre-commit && pre-commit install

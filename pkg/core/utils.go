@@ -3,8 +3,8 @@ package core
 import (
 	"strings"
 
-	"github.com/rediverio/rediver-sdk/pkg/shared/fingerprint"
-	"github.com/rediverio/rediver-sdk/pkg/shared/severity"
+	"github.com/rediverio/sdk/pkg/shared/fingerprint"
+	"github.com/rediverio/sdk/pkg/shared/severity"
 )
 
 // =============================================================================

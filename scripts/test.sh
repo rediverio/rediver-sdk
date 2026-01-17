@@ -1,5 +1,5 @@
 #!/bin/bash
-# Test script for rediver-sdk
+# Test script for sdk
 
 set -e
 

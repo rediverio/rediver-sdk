@@ -12,7 +12,7 @@ This example demonstrates how to use the Rediver SDK to:
 
 1. **Backend API running** with migration applied:
    ```bash
-   cd rediver-api
+   cd api
    make docker-migrate-up
    make docker-dev
    ```
@@ -40,14 +40,14 @@ This example demonstrates how to use the Rediver SDK to:
 ```bash
 export REDIVER_API_KEY="your-api-key-here"
 
-cd rediver-sdk
+cd sdk
 go run ./examples/integration-test/
 ```
 
 ### Option 2: Using command line flag
 
 ```bash
-cd rediver-sdk
+cd sdk
 go run ./examples/integration-test/ -api-key="your-api-key-here"
 ```
 

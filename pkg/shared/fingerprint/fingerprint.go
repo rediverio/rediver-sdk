@@ -1,7 +1,7 @@
 // Package fingerprint provides unified fingerprint generation algorithms
 // for deduplication of security findings across SDK and Backend.
 //
-// IMPORTANT: This package is shared between rediver-sdk and rediver-api.
+// IMPORTANT: This package is shared between sdk and api.
 // Any changes to fingerprint algorithms must be backward compatible
 // or coordinated across both projects.
 package fingerprint

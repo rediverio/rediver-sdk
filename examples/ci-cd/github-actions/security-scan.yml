@@ -5,7 +5,7 @@
 #
 # Features:
 # - Runs on push and pull requests
-# - Uses rediver-agent:ci Docker image
+# - Uses agent:ci Docker image
 # - Auto-detects PR context for diff-based scanning
 # - Creates inline PR comments for findings
 # - Uploads SARIF results to GitHub Security tab
@@ -54,7 +54,7 @@ jobs:
           fetch-depth: 0  # Full history for diff-based scanning
 
       - name: Run Rediver Security Scan
-        uses: docker://rediverio/rediver-agent:ci
+        uses: docker://rediverio/agent:ci
         with:
           args: >-
             -tools ${{ github.event.inputs.tools || 'semgrep,gitleaks,trivy' }}
@@ -78,7 +78,7 @@ jobs:
         if: always()
         with:
           sarif_file: results.sarif
-          category: rediver-security-scan
+          category: security-scan
 
       - name: Upload scan results artifact
         uses: actions/upload-artifact@v4
@@ -129,7 +129,7 @@ jobs:
           fi
 
       - name: Scan container with Trivy
-        uses: docker://rediverio/rediver-agent:ci
+        uses: docker://rediverio/agent:ci
         with:
           args: >-
             -tool trivy-image

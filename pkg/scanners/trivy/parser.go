@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // Parser converts Trivy JSON output to RIS format.

@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 func TestFileRetryQueue_EnqueueDequeue(t *testing.T) {

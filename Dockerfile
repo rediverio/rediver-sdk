@@ -5,6 +5,8 @@
 #   - slim: distroless static, smallest (no tools)
 #   - full: runtime with semgrep + gitleaks + trivy
 #   - ci:   full + pre-downloaded trivy DB (faster CI)
+#
+# checkov:skip=CKV_DOCKER_2: Security scanner images don't need healthcheck
 # =============================================================================
 
 # -----------------------------------------------------------------------------
@@ -12,6 +14,7 @@
 # -----------------------------------------------------------------------------
 FROM --platform=$BUILDPLATFORM public.ecr.aws/docker/library/golang:1.25-alpine AS builder
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache git ca-certificates tzdata
 
 WORKDIR /src
@@ -32,8 +35,8 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} \
     go build -trimpath \
     -ldflags="-w -s -X main.appVersion=${VERSION}" \
-    -o /out/rediver-agent \
-    ./cmd/rediver-agent
+    -o /out/agent \
+    ./cmd/agent
 
 # -----------------------------------------------------------------------------
 # Stage 2: Tools (shared for full & ci) - multi-arch aware
@@ -45,6 +48,7 @@ ARG SEMGREP_VERSION=1.93.0
 ARG GITLEAKS_VERSION=8.28.0
 ARG TRIVY_VERSION=0.67.2
 
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates git \
     && rm -rf /var/lib/apt/lists/*
@@ -53,6 +57,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir "semgrep==${SEMGREP_VERSION}"
 
 # Download arch-correct binaries for gitleaks & trivy
+# hadolint ignore=DL4006
 RUN set -eux; \
     case "${TARGETARCH}" in \
     amd64) GITLEAKS_ARCH="x64";   TRIVY_ARCH="64bit" ;; \
@@ -83,13 +88,13 @@ FROM gcr.io/distroless/static-debian12:nonroot AS slim
 LABEL org.opencontainers.image.title="Rediver Agent Slim"
 LABEL org.opencontainers.image.description="Minimal security scanning agent (distroless)"
 
-COPY --from=builder /out/rediver-agent /usr/local/bin/rediver-agent
+COPY --from=builder /out/agent /usr/local/bin/agent
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 # Cert bundle from builder (alpine). If you ever change builder base, re-check this path.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 WORKDIR /scan
-ENTRYPOINT ["/usr/local/bin/rediver-agent"]
+ENTRYPOINT ["/usr/local/bin/agent"]
 CMD ["--help"]
 
 # -----------------------------------------------------------------------------
@@ -100,6 +105,7 @@ FROM public.ecr.aws/docker/library/python:3.12-slim AS full
 LABEL org.opencontainers.image.title="Rediver Agent"
 LABEL org.opencontainers.image.description="Security scanning agent with semgrep, gitleaks, trivy"
 
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git ca-certificates \
     && rm -rf /var/lib/apt/lists/*
@@ -113,7 +119,7 @@ COPY --from=tools /usr/local/bin/semgrep* /usr/local/bin/
 COPY --from=tools /usr/local/bin/gitleaks /usr/local/bin/
 COPY --from=tools /usr/local/bin/trivy /usr/local/bin/
 
-COPY --from=builder /out/rediver-agent /usr/local/bin/rediver-agent
+COPY --from=builder /out/agent /usr/local/bin/agent
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 
 RUN mkdir -p /scan /config /cache \
@@ -125,7 +131,7 @@ ENV TRIVY_CACHE_DIR=/cache/trivy
 USER rediver
 WORKDIR /scan
 
-ENTRYPOINT ["/usr/local/bin/rediver-agent"]
+ENTRYPOINT ["/usr/local/bin/agent"]
 CMD ["--help"]
 
 # -----------------------------------------------------------------------------
@@ -136,6 +142,7 @@ FROM public.ecr.aws/docker/library/python:3.12-slim AS ci
 LABEL org.opencontainers.image.title="Rediver Agent CI"
 LABEL org.opencontainers.image.description="CI-optimized security scanning agent (preloaded Trivy DB)"
 
+# hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git ca-certificates jq \
     && rm -rf /var/lib/apt/lists/*
@@ -147,7 +154,7 @@ COPY --from=tools-with-db /usr/local/bin/gitleaks /usr/local/bin/
 COPY --from=tools-with-db /usr/local/bin/trivy /usr/local/bin/
 COPY --from=tools-with-db /root/.cache/trivy /root/.cache/trivy
 
-COPY --from=builder /out/rediver-agent /usr/local/bin/rediver-agent
+COPY --from=builder /out/agent /usr/local/bin/agent
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 
 ENV TRIVY_CACHE_DIR=/root/.cache/trivy
@@ -158,5 +165,5 @@ ENV CI=true
 RUN git config --global --add safe.directory '*'
 
 WORKDIR /github/workspace
-ENTRYPOINT ["/usr/local/bin/rediver-agent"]
+ENTRYPOINT ["/usr/local/bin/agent"]
 CMD ["-auto-ci", "-verbose"]

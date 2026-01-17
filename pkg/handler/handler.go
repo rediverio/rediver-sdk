@@ -3,9 +3,9 @@
 package handler
 
 import (
-	"github.com/rediverio/rediver-sdk/pkg/gitenv"
-	"github.com/rediverio/rediver-sdk/pkg/ris"
-	"github.com/rediverio/rediver-sdk/pkg/strategy"
+	"github.com/rediverio/sdk/pkg/gitenv"
+	"github.com/rediverio/sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/strategy"
 )
 
 // ScanHandler manages the lifecycle of a security scan.

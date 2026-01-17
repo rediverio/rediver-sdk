@@ -808,8 +808,8 @@ targets:
 
 ```go
 import (
-    "github.com/rediverio/rediver-sdk/sdk/scanners"
-    "github.com/rediverio/rediver-sdk/sdk/scanners/gitleaks"
+    "github.com/rediverio/sdk/sdk/scanners"
+    "github.com/rediverio/sdk/sdk/scanners/gitleaks"
 )
 
 // Quick start - default configuration
@@ -836,7 +836,7 @@ result, err := scanner.Scan(ctx, "/path/to/repo", &core.SecretScanOptions{
 ### 13.2 Parser Usage
 
 ```go
-import "github.com/rediverio/rediver-sdk/sdk/scanners/gitleaks"
+import "github.com/rediverio/sdk/sdk/scanners/gitleaks"
 
 // Parse gitleaks JSON output to RIS format
 parser := &gitleaks.Parser{}

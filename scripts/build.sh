@@ -1,15 +1,15 @@
 #!/bin/bash
-# Build script for rediver-sdk
+# Build script for sdk
 
 set -e
 
-echo "Building rediver-sdk..."
+echo "Building sdk..."
 
 # Build all packages
 go build ./...
 
 # Build CLI
-go build -o bin/rediver-agent ./cmd/rediver-agent
+go build -o bin/agent ./cmd/agent
 
 echo "Build completed successfully!"
-echo "Binary: bin/rediver-agent"
+echo "Binary: bin/agent"

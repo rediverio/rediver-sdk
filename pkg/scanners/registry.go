@@ -7,10 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/scanners/gitleaks"
-	"github.com/rediverio/rediver-sdk/pkg/scanners/semgrep"
-	"github.com/rediverio/rediver-sdk/pkg/scanners/trivy"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/scanners/gitleaks"
+	"github.com/rediverio/sdk/pkg/scanners/semgrep"
+	"github.com/rediverio/sdk/pkg/scanners/trivy"
 )
 
 // =============================================================================

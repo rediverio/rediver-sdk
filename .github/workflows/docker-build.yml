@@ -1,10 +1,10 @@
 # =============================================================================
 # Build and Push Docker Images
 # =============================================================================
-# Builds and pushes rediver-agent Docker images to Docker Hub:
-#   - rediverio/rediver-agent:latest     (full, with all tools)
-#   - rediverio/rediver-agent:slim       (minimal, no tools)
-#   - rediverio/rediver-agent:ci         (CI/CD optimized)
+# Builds and pushes agent Docker images to Docker Hub:
+#   - rediverio/agent:latest     (full, with all tools)
+#   - rediverio/agent:slim       (minimal, no tools)
+#   - rediverio/agent:ci         (CI/CD optimized)
 #
 # All variants are built from a single Dockerfile using --target flag.
 #
@@ -36,7 +36,7 @@ on:
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: rediverio/rediver-agent
+  IMAGE_NAME: rediverio/agent
 
 jobs:
   # ============================================

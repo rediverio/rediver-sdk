@@ -1,7 +1,7 @@
 // Package severity provides unified severity level definitions and mappings
 // for security findings across SDK and Backend.
 //
-// IMPORTANT: This package is shared between rediver-sdk and rediver-api.
+// IMPORTANT: This package is shared between sdk and api.
 // Any changes must be backward compatible or coordinated across both projects.
 package severity
 

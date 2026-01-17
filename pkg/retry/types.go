@@ -25,7 +25,7 @@ package retry
 import (
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // ItemType defines the type of queued item.

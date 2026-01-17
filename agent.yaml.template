@@ -136,7 +136,7 @@ advanced:
   scan_timeout: 30m
 
   # Cache directory for scanner databases
-  cache_dir: /tmp/rediver-cache
+  cache_dir: /tmp/app-cache
 
   # Exclude patterns (glob)
   exclude:

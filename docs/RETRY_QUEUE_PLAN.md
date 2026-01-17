@@ -84,7 +84,7 @@ package retry
 
 import (
     "time"
-    "github.com/rediverio/rediver-sdk/pkg/ris"
+    "github.com/rediverio/sdk/pkg/ris"
 )
 
 // QueueItem represents an item in the retry queue.
@@ -234,7 +234,7 @@ import (
     "sync"
     "time"
 
-    "github.com/rediverio/rediver-sdk/pkg/core"
+    "github.com/rediverio/sdk/pkg/core"
 )
 
 // RetryWorker processes the retry queue in the background.
@@ -395,7 +395,7 @@ export REDIVER_RETRY_TTL=168h
 ## File Structure
 
 ```
-rediver-sdk/
+sdk/
 ├── pkg/
 │   ├── retry/
 │   │   ├── types.go        # Core types (QueueItem, QueueStats, etc.)

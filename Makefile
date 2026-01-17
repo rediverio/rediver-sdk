@@ -7,7 +7,7 @@
 # Variables
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
 REGISTRY ?= ghcr.io/rediverio
-IMAGE_NAME ?= rediver-agent
+IMAGE_NAME ?= agent
 GO_FILES := $(shell find . -name '*.go' -not -path './vendor/*')
 
 # Default target
@@ -17,26 +17,26 @@ all: lint test build
 # Build
 # =============================================================================
 
-build: ## Build the rediver-agent binary
-	@echo "Building rediver-agent..."
+build: ## Build the agent binary
+	@echo "Building agent..."
 	@mkdir -p bin
-	go build -ldflags="-w -s -X main.appVersion=$(VERSION)" -o bin/rediver-agent ./cmd/rediver-agent
-	@echo "Built: bin/rediver-agent"
+	go build -ldflags="-w -s -X main.appVersion=$(VERSION)" -o bin/agent ./cmd/agent
+	@echo "Built: bin/agent"
 
 build-all: ## Build for all platforms
 	@echo "Building for all platforms..."
 	@mkdir -p bin
-	GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o bin/rediver-agent-linux-amd64 ./cmd/rediver-agent
-	GOOS=linux GOARCH=arm64 go build -ldflags="-w -s" -o bin/rediver-agent-linux-arm64 ./cmd/rediver-agent
-	GOOS=darwin GOARCH=amd64 go build -ldflags="-w -s" -o bin/rediver-agent-darwin-amd64 ./cmd/rediver-agent
-	GOOS=darwin GOARCH=arm64 go build -ldflags="-w -s" -o bin/rediver-agent-darwin-arm64 ./cmd/rediver-agent
-	GOOS=windows GOARCH=amd64 go build -ldflags="-w -s" -o bin/rediver-agent-windows-amd64.exe ./cmd/rediver-agent
+	GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o bin/agent-linux-amd64 ./cmd/agent
+	GOOS=linux GOARCH=arm64 go build -ldflags="-w -s" -o bin/agent-linux-arm64 ./cmd/agent
+	GOOS=darwin GOARCH=amd64 go build -ldflags="-w -s" -o bin/agent-darwin-amd64 ./cmd/agent
+	GOOS=darwin GOARCH=arm64 go build -ldflags="-w -s" -o bin/agent-darwin-arm64 ./cmd/agent
+	GOOS=windows GOARCH=amd64 go build -ldflags="-w -s" -o bin/agent-windows-amd64.exe ./cmd/agent
 	@echo "Built binaries in bin/"
 
 install: build ## Install to /usr/local/bin
-	@echo "Installing rediver-agent..."
-	sudo cp bin/rediver-agent /usr/local/bin/
-	@echo "Installed to /usr/local/bin/rediver-agent"
+	@echo "Installing agent..."
+	sudo cp bin/agent /usr/local/bin/
+	@echo "Installed to /usr/local/bin/agent"
 
 # =============================================================================
 # Test
@@ -68,7 +68,18 @@ fmt: ## Format code
 
 pre-commit-install: ## Install pre-commit hooks
 	@echo "Installing pre-commit hooks..."
-	@pip install pre-commit --quiet || pip3 install pre-commit --quiet
+	@if command -v pre-commit >/dev/null 2>&1; then \
+		echo "pre-commit already installed"; \
+	elif command -v brew >/dev/null 2>&1; then \
+		echo "Installing via brew..."; \
+		brew install pre-commit; \
+	elif command -v pipx >/dev/null 2>&1; then \
+		echo "Installing via pipx..."; \
+		pipx install pre-commit; \
+	else \
+		echo "Please install pre-commit: brew install pre-commit"; \
+		exit 1; \
+	fi
 	@pre-commit install
 	@echo "Pre-commit hooks installed!"
 
@@ -137,10 +148,10 @@ dev-tools: ## Install development tools
 	go install honnef.co/go/tools/cmd/staticcheck@latest
 
 check-tools: ## Check if scanner tools are installed
-	go run ./cmd/rediver-agent -check-tools
+	go run ./cmd/agent -check-tools
 
 run: build ## Run the agent (example)
-	./bin/rediver-agent -tools semgrep,gitleaks,trivy -target . -verbose
+	./bin/agent -tools semgrep,gitleaks,trivy -target . -verbose
 
 # =============================================================================
 # Clean

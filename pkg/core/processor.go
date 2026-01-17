@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // BaseProcessor provides a default implementation of the Processor interface.

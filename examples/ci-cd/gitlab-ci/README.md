@@ -30,11 +30,11 @@ When running in a MR context, findings are posted as inline comments on changed 
 
 ```yaml
 mr-security-review:
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   variables:
     GITLAB_TOKEN: $CI_JOB_TOKEN
   script:
-    - rediver-agent -tools semgrep -target . -auto-ci -comments -verbose
+    - agent -tools semgrep -target . -auto-ci -comments -verbose
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 ```
@@ -58,7 +58,7 @@ variables:
   REDIVER_API_URL: $REDIVER_API_URL
   REDIVER_API_KEY: $REDIVER_API_KEY
 script:
-  - rediver-agent -tools semgrep,gitleaks,trivy -target . -push
+  - agent -tools semgrep,gitleaks,trivy -target . -push
 ```
 
 ## Environment Variables
@@ -90,9 +90,9 @@ script:
 ```yaml
 sast:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
-    - rediver-agent -tool semgrep -target . -verbose -sarif -sarif-output gl-sast-report.json
+    - agent -tool semgrep -target . -verbose -sarif -sarif-output gl-sast-report.json
   artifacts:
     reports:
       sast: gl-sast-report.json
@@ -103,10 +103,10 @@ sast:
 ```yaml
 secret-detection:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
     - |
-      rediver-agent -tool gitleaks -target . -verbose -json -output secrets.json
+      agent -tool gitleaks -target . -verbose -json -output secrets.json
       SECRETS=$(cat secrets.json | jq '.findings | length')
       if [ "$SECRETS" -gt 0 ]; then
         exit 1
@@ -118,9 +118,9 @@ secret-detection:
 ```yaml
 dependency-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
-    - rediver-agent -tool trivy -target . -verbose -json -output dependencies.json
+    - agent -tool trivy -target . -verbose -json -output dependencies.json
   artifacts:
     reports:
       dependency_scanning: dependencies.json
@@ -131,14 +131,14 @@ dependency-scan:
 ```yaml
 container-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   services:
     - docker:dind
   variables:
     DOCKER_HOST: tcp://docker:2375
   script:
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - rediver-agent -tool trivy-image -target $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -verbose
+    - agent -tool trivy-image -target $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -verbose
 ```
 
 ### IaC Scanning
@@ -146,9 +146,9 @@ container-scan:
 ```yaml
 iac-scan:
   stage: security
-  image: rediverio/rediver-agent:ci
+  image: rediverio/agent:ci
   script:
-    - rediver-agent -tool trivy-config -target . -verbose
+    - agent -tool trivy-config -target . -verbose
   rules:
     - changes:
         - "**/*.tf"
@@ -168,7 +168,7 @@ For weekly security audits, create a scheduled pipeline:
 ```yaml
 script:
   - |
-    rediver-agent -tools semgrep -target . -json -output results.json
+    agent -tools semgrep -target . -json -output results.json
     CRITICAL=$(cat results.json | jq '[.findings[] | select(.severity == "critical")] | length')
     if [ "$CRITICAL" -gt 0 ]; then
       echo "Found $CRITICAL critical findings!"

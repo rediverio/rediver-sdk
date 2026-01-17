@@ -34,12 +34,12 @@ variables:
 
 security-scan:
   stage: security
-  image: ghcr.io/rediverio/rediver-agent:ci
+  image: ghcr.io/rediverio/agent:ci
   variables:
     GIT_DEPTH: 0  # Full clone for diff-based scanning
   script:
     - |
-      rediver-agent \
+      agent \
         -tools semgrep,gitleaks,trivy \
         -target . \
         -auto-ci \
@@ -61,10 +61,10 @@ security-scan:
 # SAST only (faster, for quick feedback)
 sast-quick:
   stage: security
-  image: ghcr.io/rediverio/rediver-agent:ci
+  image: ghcr.io/rediverio/agent:ci
   script:
     - |
-      rediver-agent \
+      agent \
         -tool semgrep \
         -target . \
         -auto-ci \
@@ -76,10 +76,10 @@ sast-quick:
 # Secret scanning
 secret-scan:
   stage: security
-  image: ghcr.io/rediverio/rediver-agent:ci
+  image: ghcr.io/rediverio/agent:ci
   script:
     - |
-      rediver-agent \
+      agent \
         -tool gitleaks \
         -target . \
         -verbose
@@ -140,7 +140,7 @@ build-ci:
 
 container-scan:
   stage: container-scan
-  image: ghcr.io/rediverio/rediver-agent:ci
+  image: ghcr.io/rediverio/agent:ci
   services:
     - docker:24-dind
   variables:
@@ -148,7 +148,7 @@ container-scan:
     DOCKER_TLS_CERTDIR: "/certs"
   script:
     - |
-      rediver-agent \
+      agent \
         -tool trivy-image \
         -target ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHORT_SHA} \
         -verbose \

@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/gitenv"
-	"github.com/rediverio/rediver-sdk/pkg/ris"
-	"github.com/rediverio/rediver-sdk/pkg/strategy"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/gitenv"
+	"github.com/rediverio/sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/strategy"
 )
 
 // RemoteHandler sends scan results to a remote Rediver server.

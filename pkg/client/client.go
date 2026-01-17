@@ -14,9 +14,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/core"
-	"github.com/rediverio/rediver-sdk/pkg/retry"
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/core"
+	"github.com/rediverio/sdk/pkg/retry"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // Client is the Rediver API client.
@@ -433,7 +433,7 @@ func (c *Client) doRequestOnce(ctx context.Context, method, url string, body []b
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Authorization", "Bearer "+c.apiKey)
-	req.Header.Set("User-Agent", "rediver-sdk/1.0")
+	req.Header.Set("User-Agent", "sdk/1.0")
 
 	// Add worker ID header for audit trail
 	if c.workerID != "" {

@@ -1,7 +1,7 @@
-# Gitleaks configuration for rediver-sdk
+# Gitleaks configuration for sdk
 # https://gitleaks.io/
 
-title = "rediver-sdk gitleaks config"
+title = "sdk gitleaks config"
 
 [allowlist]
 description = "Global allowlist"

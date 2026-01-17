@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/rediverio/rediver-sdk/pkg/ris"
+	"github.com/rediverio/sdk/pkg/ris"
 )
 
 // =============================================================================
@@ -140,7 +140,7 @@ func (c *BaseCollector) FetchJSON(ctx context.Context, path string, query map[st
 // setHeaders sets common headers on the request.
 func (c *BaseCollector) setHeaders(req *http.Request) {
 	req.Header.Set("Accept", "application/json")
-	req.Header.Set("User-Agent", "rediver-sdk/1.0")
+	req.Header.Set("User-Agent", "sdk/1.0")
 
 	if c.apiKey != "" {
 		req.Header.Set("Authorization", "Bearer "+c.apiKey)

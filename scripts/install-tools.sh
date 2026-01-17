@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install development tools for rediver-sdk
+# Install development tools for sdk
 
 set -e
 

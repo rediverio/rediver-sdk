@@ -62,4 +62,4 @@ jobs:
         run: go build ./...
 
       - name: Build CLI
-        run: go build -o rediver-agent ./cmd/rediver-agent
+        run: go build -o agent ./cmd/agent
